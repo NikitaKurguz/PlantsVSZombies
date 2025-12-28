@@ -127,10 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Manager.h" />
     <ClInclude Include="Object.h" />
   </ItemGroup>
   <ItemGroup>
