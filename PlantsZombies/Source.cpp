@@ -1,4 +1,5 @@
 ﻿#include <SFML/Graphics.hpp>
+#include "Manager.h"
 #include <iostream>
 using namespace std;
 using namespace sf;
