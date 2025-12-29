@@ -1,6 +1,8 @@
 #pragma once
 #include "Object.h"
-enum class MessageType { Create, Death, Move, DealDamage };
+enum class MessageType { 
+	Create, Death, Move, DealDamage 
+};
 struct Message
 {
 	MessageType type;
@@ -26,8 +28,8 @@ struct Message
 		struct
 		{
 			float damage_amount;
-			Object* to_who;
-			Object* by_whom;
+			Object* target;
+			Object* attacker;
 		}deal_damage;
 	};
 };
