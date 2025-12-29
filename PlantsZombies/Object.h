@@ -4,6 +4,8 @@ class Message;
 struct Object
 {
 private:
+	static int LastID;
+protected:
 	int ID;
 	sf::Vector2f position;
 	
@@ -15,8 +17,10 @@ public:
 	int GetID() const { return ID; }
 	sf::Vector2f GetPosition() const { return position; }
 
-	virtual void Update(float t);
-	virtual void SendMessage(Message* m);
+	static int GetNewID();
+	static int GetLastID();
+	virtual void Update(float t) = 0;
+	virtual void SendMessage(Message* m) = 0;
 	void Draw();
 };
 
