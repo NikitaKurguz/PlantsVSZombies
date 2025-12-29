@@ -11,7 +11,7 @@ protected:
 	
 public:
 	Object();
-	Object(const Object&);
+	Object(const Object& other);
 	virtual ~Object();
 
 	int GetID() const { return ID; }

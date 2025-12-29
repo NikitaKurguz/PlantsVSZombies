@@ -7,8 +7,9 @@ Object::Object()
 
 }
 
-Object::Object(const Object&)
+Object::Object(const Object& other)
 {
+
 }
 
 Object::~Object()
