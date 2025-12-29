@@ -5,7 +5,7 @@
 class Manager
 {
 private:
-	static Manager* instance;
+	static Manager* manager_exemplar;
 
 	std::vector<Object*> objects;
 	std::vector<Message*> messages;
@@ -15,7 +15,10 @@ private:
 	Manager(const Manager&) = delete;
 	Manager& operator=(const Manager&) = delete;
 public:
-	static Manager* GetInstance();
-	void KillInstance();
+	static Manager* GetExemplar();
+	void KillIExemplar();
+
+	void UpdateObjects(float t);
+	void SendMessage(Message* m);
 };
 

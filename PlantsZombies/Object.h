@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-class Object
+class Message;
+struct Object
 {
 private:
 	int ID;
@@ -15,6 +16,7 @@ public:
 	sf::Vector2f GetPosition() const { return position; }
 
 	virtual void Update(float t);
+	virtual void SendMessage(Message* m);
 	void Draw();
 };
 

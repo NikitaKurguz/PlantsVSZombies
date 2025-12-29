@@ -17,6 +17,10 @@ void Object::Update(float t)
 {
 }
 
+void Object::SendMessage(Message* m)
+{
+}
+
 void Object::Draw()
 {
 }
