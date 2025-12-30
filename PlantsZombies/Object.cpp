@@ -2,25 +2,41 @@
 
 int Object::LastID = 0;
 
-Object::Object(sf::Vector2f position, float scale_rad, const sf::Texture& tex):
+Object::Object(sf::Vector2f position, float scale_rad, const std::string& filename):
 	position(position), scale_rad(scale_rad)
 {
 	id = GetNewID();
-	SetTexture(tex);
+	SetTexture(filename);
 }
 
-Object::Object(const Object& other)
-{
+Object::Object(const Object& other):
 
+	position(other.position), scale_rad(other.scale_rad)
+{
+	const sf::Texture* tex = other.sprite.getTexture();
+	if (tex) 
+		sprite.setTexture(*tex);
+
+	sprite.setPosition(other.sprite.getPosition());
+	sprite.setOrigin(other.sprite.getOrigin());
+	sprite.setScale(other.sprite.getScale());
+	sprite.setRotation(other.sprite.getRotation());
+	id = GetNewID();
 }
 
 Object::~Object()
 {
 }
 
-void Object::SetTexture(const sf::Texture& tex)
+void Object::SetTexture(const std::string& texture_filename)
 {
-	sprite.setTexture(tex);
+	sf::Texture* tex = TextureManager::GetTextureInstance()->GetTexturePointer(texture_filename);
+	if (tex == nullptr) {
+		if (!(TextureManager::GetTextureInstance()->LoadTextureFromFile(texture_filename)))
+			return;
+		tex = TextureManager::GetTextureInstance()->GetTexturePointer(texture_filename);
+	}
+	sprite.setTexture(*tex);
 	sf::FloatRect bounds = sprite.getLocalBounds();
 	sprite.setOrigin(bounds.width / 2.0f, bounds.height / 2.0f);
 	if (scale_rad > 0)

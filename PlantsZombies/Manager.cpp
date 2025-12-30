@@ -28,9 +28,11 @@ void Manager::UpdateObjects(float t)
 {
 	for (auto& obj : objects) 
 		obj->Update(t);
-
-	for (auto& m : messages) 
+	Message* m;
+	while(!(messages.empty()))
 	{
+		m = messages.front();
+		messages.erase(messages.begin());
 		switch (m->type)
 		{
 		case MessageType::Death: {
@@ -50,7 +52,8 @@ void Manager::UpdateObjects(float t)
 		{
 			for (auto& obj : objects)
 				obj->SendMessage(m);
-		}	
+		}
+		delete m;
 	}
 
 }
