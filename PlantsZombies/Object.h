@@ -7,7 +7,7 @@ private:
 	static int LastID;
 protected:
 	int id;
-	float size_rad;
+	float scale_rad;
 	sf::Vector2f position;
 	sf::Sprite sprite;
 	

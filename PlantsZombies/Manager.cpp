@@ -55,6 +55,12 @@ void Manager::UpdateObjects(float t)
 
 }
 
+void Manager::DrawObjects(sf::RenderWindow window)
+{
+	for (auto& obj : objects) 
+		obj->Draw(window);
+}
+
 void Manager::SendMessage(Message* m)
 {
 	messages.push_back(m);
