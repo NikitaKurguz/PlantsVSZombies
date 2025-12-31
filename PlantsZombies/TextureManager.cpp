@@ -11,32 +11,34 @@ TextureManager::~TextureManager()
 
 bool TextureManager::LoadTextureFromFile(const std::string& filename)
 {
-	for (auto& pair : textures)
-	{
-		if (pair.first == filename) return true;
-	}
+	for (auto& data : textures)
+		if (data.filename == filename)
+			return true;
+
 	sf::Texture* texture = new sf::Texture();
-	if (texture->loadFromFile(filename)) {
-		textures.push_back({ filename, texture });
-		return true;
+	if (!texture->loadFromFile(filename))
+	{
+		delete texture;
+		return false;
 	}
-	delete texture;
-	return false;
+
+	textures.push_back({ texture, filename}); 
+	return true;
 }
+
 
 sf::Texture* TextureManager::GetTexturePointer(const std::string& filename)
 {
-	for (auto& pair : textures) {
-		if (pair.first == filename) 
-			return pair.second;
+	for (auto& data : textures) {
+		if (data.filename == filename) 
+			return data.tex;
 	}
 	return nullptr;
 }
-
 void TextureManager::DestroyTextures()
 {
-	for (auto& pair : textures) {
-		delete pair.second;
+	for (auto& data : textures) {
+		delete data.tex;
 	}
 	textures.clear();
 }

@@ -19,7 +19,7 @@ public:
 	void KillIExemplar();
 
 	void UpdateObjects(float t);
-	void DrawObjects(sf::RenderWindow window);
+	void DrawObjects(sf::RenderWindow& window);
 	void SendMessage(Message* m);
 };
 

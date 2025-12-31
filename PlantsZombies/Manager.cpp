@@ -22,6 +22,7 @@ Manager* Manager::GetExemplar()
 void Manager::KillIExemplar()
 {
 	if (manager_exemplar) delete manager_exemplar;
+	manager_exemplar = nullptr;
 }
 
 void Manager::UpdateObjects(float t)
@@ -58,7 +59,7 @@ void Manager::UpdateObjects(float t)
 
 }
 
-void Manager::DrawObjects(sf::RenderWindow window)
+void Manager::DrawObjects(sf::RenderWindow& window)
 {
 	for (auto& obj : objects) 
 		obj->Draw(window);

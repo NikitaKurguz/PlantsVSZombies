@@ -1,11 +1,16 @@
 #pragma once
 #include <string>
 #include <SFML/Graphics.hpp>
+
 class TextureManager
 {
 private:
+	struct Tex_data {
+		sf::Texture* tex;
+		std::string filename;
+	};
 	static TextureManager* texture_instance;
-	std::vector<std::pair<std::string, sf::Texture*>> textures;
+	std::vector<Tex_data> textures;
 
 	TextureManager();
 	~TextureManager();
@@ -14,8 +19,8 @@ private:
 public:
 	bool LoadTextureFromFile(const std::string& filename);
 	sf::Texture* GetTexturePointer(const std::string& filename);
+	
 	void DestroyTextures();
-
 	static TextureManager* GetTextureInstance();
 	void KillTextureInstance();
 };

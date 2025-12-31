@@ -2,14 +2,15 @@
 #include <SFML/Graphics.hpp>
 #include "TextureManager.h"
 #include <string>
-class Message;
-struct Object
+struct Message;
+class Object
 {
 private:
 	static int LastID;
 protected:
 	int id;
 	float scale_rad;
+	std::string textureFilename;
 	sf::Vector2f position;
 	sf::Sprite sprite;
 	sf::IntRect rect;
