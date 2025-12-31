@@ -9,7 +9,7 @@ protected:
 	float damage;
 public:
 	Zombie(sf::Vector2f position, float scale_rad, const std::string& file_name,
-		float hp, float velocity, float damage);
+		float hp, float velocity, float damage, const sf::IntRect& rect);
 	virtual ~Zombie();
 };
 

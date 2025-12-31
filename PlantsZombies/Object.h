@@ -12,9 +12,10 @@ protected:
 	float scale_rad;
 	sf::Vector2f position;
 	sf::Sprite sprite;
+	sf::IntRect rect;
 	
 public:
-	Object(sf::Vector2f position, float size_rad, const std::string& filename);
+	Object(sf::Vector2f position, float size_rad, const std::string& filename, const sf::IntRect& rect);
 	Object(const Object& other);
 	virtual ~Object();
 
@@ -22,7 +23,7 @@ public:
 	sf::Vector2f GetPosition() const { return position; }
 	void Position(sf::Vector2f new_pos);
 	
-	void SetTexture(const std::string& texture_filename);
+	void SetTexture(const std::string& texture_filename, const sf::IntRect& rect);
 	static int GetNewID();
 	static int GetLastID();
 	virtual void Update(float t) = 0;

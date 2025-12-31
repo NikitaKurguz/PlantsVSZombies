@@ -2,33 +2,34 @@
 
 int Object::LastID = 0;
 
-Object::Object(sf::Vector2f position, float scale_rad, const std::string& filename):
+Object::Object(sf::Vector2f position, float scale_rad, const std::string& filename, const sf::IntRect& rect):
 	position(position), scale_rad(scale_rad)
 {
 	id = GetNewID();
-	SetTexture(filename);
+	SetTexture(filename, rect);
 }
 
-Object::Object(const Object& other):
-
-	position(other.position), scale_rad(other.scale_rad)
+Object::Object(const Object& other)
+	: position(other.position),
+	scale_rad(other.scale_rad),
+	rect(other.rect),
+	id(GetNewID())
 {
-	const sf::Texture* tex = other.sprite.getTexture();
-	if (tex) 
+	if (const sf::Texture* tex = other.sprite.getTexture())
+	{
 		sprite.setTexture(*tex);
-
-	sprite.setPosition(other.sprite.getPosition());
+		sprite.setTextureRect(rect);
+	}
 	sprite.setOrigin(other.sprite.getOrigin());
 	sprite.setScale(other.sprite.getScale());
 	sprite.setRotation(other.sprite.getRotation());
-	id = GetNewID();
 }
 
 Object::~Object()
 {
 }
 
-void Object::SetTexture(const std::string& texture_filename)
+void Object::SetTexture(const std::string& texture_filename, const sf::IntRect& rect)
 {
 	sf::Texture* tex = TextureManager::GetTextureInstance()->GetTexturePointer(texture_filename);
 	if (tex == nullptr) {
@@ -37,6 +38,7 @@ void Object::SetTexture(const std::string& texture_filename)
 		tex = TextureManager::GetTextureInstance()->GetTexturePointer(texture_filename);
 	}
 	sprite.setTexture(*tex);
+	sprite.setTextureRect(rect);
 	sf::FloatRect bounds = sprite.getLocalBounds();
 	sprite.setOrigin(bounds.width / 2.0f, bounds.height / 2.0f);
 	if (scale_rad > 0)
