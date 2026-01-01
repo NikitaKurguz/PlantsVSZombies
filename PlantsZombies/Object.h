@@ -12,12 +12,17 @@ protected:
 	int id;
 	std::string textureFilename;
 	sf::Vector2f position;
+
 	sf::Sprite sprite;
 	sf::IntRect rect;
+
+	sf::Vector2f physical_size;
+	bool AutoScalingEnabled = true;
+
 	void CheckTex(const std::string& filename);
-	
+	void AutoScaling();
 public:
-	Object(sf::Vector2f position, const std::string& filename, const sf::IntRect& rect);
+	Object(sf::Vector2f position, const std::string& filename, const sf::IntRect& rect, sf::Vector2f physical_size);
 	Object(const Object& other);
 	virtual ~Object();
 

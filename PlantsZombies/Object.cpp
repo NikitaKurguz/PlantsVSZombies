@@ -7,8 +7,18 @@ void Object::CheckTex(const std::string& filename)
 		std::cerr << "Ошибка загрузки текстуры: " << filename << std::endl;
 	}
 }
-Object::Object(sf::Vector2f position, const std::string& filename, const sf::IntRect& rect) :
-	position(position), rect(rect)
+void Object::AutoScaling()
+{
+	sf::FloatRect bounds = sprite.getLocalBounds();
+	if (bounds.width <= 0 || bounds.height <= 0)
+		return;
+	sprite.setOrigin(bounds.width / 2.f, bounds.height);
+
+	if (AutoScalingEnabled)
+		sprite.setScale(physical_size.x / bounds.width, physical_size.y / bounds.height);
+}
+Object::Object(sf::Vector2f position, const std::string& filename, const sf::IntRect& rect, sf::Vector2f physical_size) :
+	position(position), rect(rect), physical_size(physical_size)
 {
 	id = GetNewID();
 	SetTexture(filename, rect);
@@ -18,6 +28,7 @@ Object::Object(const Object& other)
 	: position(other.position),
 	rect(other.rect),
 	textureFilename(other.textureFilename),
+	physical_size(other.physical_size),
 	id(GetNewID())
 {
 	if (const sf::Texture* tex = other.sprite.getTexture())
@@ -42,17 +53,13 @@ void Object::SetTexture(const std::string& filename, const sf::IntRect& rect)
 	textureFilename = filename;
 
 	auto* tm = TextureManager::GetTextureInstance();
-
 	if (!tm->LoadTextureFromFile(filename))
 		return;
 
-	sf::Texture* tex = tm->GetTexturePointer(filename);
-	sprite.setTexture(*tex);
+	sprite.setTexture(*tm->GetTexturePointer(filename));
 	sprite.setTextureRect(rect);
 
-	sf::FloatRect bounds = sprite.getLocalBounds();
-	sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
-
+	AutoScaling();
 }
 
 void Object::Position(sf::Vector2f new_pos)

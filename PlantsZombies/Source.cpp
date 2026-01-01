@@ -7,7 +7,7 @@ using namespace sf;
 int main()
 {
     system("chcp 1251 > nul");
-	RenderWindow window(VideoMode(800, 600), "Plants vs Zombies");
+	RenderWindow window(VideoMode(1280, 960), "Plants vs Zombies");
 
     Manager* manager = Manager::GetExemplar();
     Message* msg = new Message;

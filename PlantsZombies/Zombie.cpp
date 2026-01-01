@@ -1,17 +1,17 @@
 #include "Zombie.h"
 
 Zombie::Zombie(sf::Vector2f position, const std::string& file_name, 
-	float hp, float velocity, float damage, const sf::IntRect& rect):
-	Object(position, file_name, rect), hp(hp), velocity(velocity), damage(damage)
+	float hp, float velocity, float damage, const sf::IntRect& rect, sf::Vector2f physical_size):
+	Object(position, file_name, rect, physical_size), hp(hp), velocity(velocity), damage(damage)
 {
 	CheckTex(file_name);
 }
 
 Zombie::Zombie():
-	Object(sf::Vector2f(0, 0), "default_zombie.png", sf::IntRect(0, 0, 32, 32)),
+	Object({ 1200, 200 }, "textures\\zombies\\DefaultZombie.png", { 0, 0, 128, 205 }, { 80, 120 }),
 	hp(100), velocity(2), damage(10)
 {
-	CheckTex("default_zombie.png");
+	CheckTex("textures\\zombies\\DefaultZombie.png");
 }
 
 
