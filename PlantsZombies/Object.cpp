@@ -1,9 +1,14 @@
 #include "Object.h"
 
 int Object::LastID = 0;
-
-Object::Object(sf::Vector2f position, float scale_rad, const std::string& filename, const sf::IntRect& rect) :
-	position(position), scale_rad(scale_rad), rect(rect)
+void Object::CheckTex(const std::string& filename)
+{
+	if (TextureManager::GetTextureInstance()->GetTexturePointer(filename) == nullptr) {
+		std::cerr << "Ошибка загрузки текстуры: " << filename << std::endl;
+	}
+}
+Object::Object(sf::Vector2f position, const std::string& filename, const sf::IntRect& rect) :
+	position(position), rect(rect)
 {
 	id = GetNewID();
 	SetTexture(filename, rect);
@@ -11,7 +16,6 @@ Object::Object(sf::Vector2f position, float scale_rad, const std::string& filena
 
 Object::Object(const Object& other)
 	: position(other.position),
-	scale_rad(other.scale_rad),
 	rect(other.rect),
 	textureFilename(other.textureFilename),
 	id(GetNewID())
@@ -49,15 +53,6 @@ void Object::SetTexture(const std::string& filename, const sf::IntRect& rect)
 	sf::FloatRect bounds = sprite.getLocalBounds();
 	sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
 
-	if (scale_rad > 0)
-	{
-		float maxSide = std::max(bounds.width, bounds.height);
-		if (maxSide > 0)
-		{
-			float scale = (scale_rad * 2.f) / maxSide;
-			sprite.setScale(scale, scale);
-		}
-	}
 }
 
 void Object::Position(sf::Vector2f new_pos)
@@ -73,14 +68,6 @@ int Object::GetNewID()
 int Object::GetLastID()
 {
 	return LastID;
-}
-
-void Object::Update(float t)
-{
-}
-
-void Object::SendMessage(Message* m)
-{
 }
 
 void Object::Draw(sf::RenderWindow& window)

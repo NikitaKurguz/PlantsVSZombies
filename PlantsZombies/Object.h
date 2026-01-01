@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "TextureManager.h"
 #include <string>
+#include <iostream>
 struct Message;
 class Object
 {
@@ -9,14 +10,14 @@ private:
 	static int LastID;
 protected:
 	int id;
-	float scale_rad;
 	std::string textureFilename;
 	sf::Vector2f position;
 	sf::Sprite sprite;
 	sf::IntRect rect;
+	void CheckTex(const std::string& filename);
 	
 public:
-	Object(sf::Vector2f position, float size_rad, const std::string& filename, const sf::IntRect& rect);
+	Object(sf::Vector2f position, const std::string& filename, const sf::IntRect& rect);
 	Object(const Object& other);
 	virtual ~Object();
 

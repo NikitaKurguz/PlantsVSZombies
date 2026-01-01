@@ -32,5 +32,6 @@ struct Message
 			Object* attacker;
 		}deal_damage;
 	};
+	Message();
 };
 
