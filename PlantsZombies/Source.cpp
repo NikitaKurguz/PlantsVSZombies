@@ -4,10 +4,12 @@
 #include "GameField.h"
 #include "LevelManager.h"
 #include <iostream>
+#include <ctime>
 using namespace std;
 using namespace sf;
 int main()
 {
+    srand(time(nullptr));
     system("chcp 1251 > nul");
 	RenderWindow window(VideoMode(1024, 600), "Plants vs Zombies");
 

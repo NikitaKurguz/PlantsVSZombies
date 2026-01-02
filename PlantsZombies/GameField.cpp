@@ -1,4 +1,3 @@
-
 #include "GameField.h"
 
 GameField::GameField():
@@ -15,18 +14,11 @@ GameField::GameField():
         for (int c = 0; c < cols; ++c)
             grid[r][c].center = GetCellCenter(r, c);
 
-    lawnMowers.resize(rows, nullptr);
 }
 void GameField::Draw(sf::RenderWindow& window)
 {
     window.draw(background);
 
-    sf::CircleShape center(3.f);
-    center.setFillColor(sf::Color::Blue);
-    center.setOrigin(3.f, 3.f);
-
-    sf::Vector2f pos = GetMowerPosition(0);
-    center.setPosition(pos);
 
     sf::RectangleShape cell(cell_size);
     cell.setFillColor(sf::Color::Transparent);
@@ -41,7 +33,6 @@ void GameField::Draw(sf::RenderWindow& window)
                 field_origin.y + r * cell_size.y
             );
             window.draw(cell);
-            window.draw(center);
         }
 }
 
@@ -56,23 +47,17 @@ bool GameField::IsCellFree(int row, int col) const
     return grid[row][col].plant == nullptr;
 }
 
-void GameField::PlacePlant(Object* plant, int row, int col)
-{
-    if (!IsCellFree(row, col))
-        return;
-
-    grid[row][col].plant = plant;
-    plant->Position(grid[row][col].center);
-}
-
-sf::Vector2f GameField::GetMowerPosition(int row) const
-{
-    return { field_origin.x - (cell_size.x * 0.3f),
-        field_origin.y + row * cell_size.y + cell_size.y * 0.5f };
-}
 
 sf::Vector2f GameField::GetZombieSpawnPosition(int row) const
 {
     return { 1100.f, GetCellCenter(row, 0).y + cell_size.y * 0.25f };
 }
+sf::Vector2f GameField::GetLawnMowerPosition(int row) const
+{
+    return {
+        field_origin.x - cell_size.x * 0.5f,
+        field_origin.y + row * cell_size.y + cell_size.y * 0.6f
+    };
+}
+
 

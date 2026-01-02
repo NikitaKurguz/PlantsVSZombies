@@ -8,14 +8,6 @@ Zombie::Zombie(int row, sf::Vector2f position, const std::string& file_name,
 	CheckTex(file_name);
 }
 
-Zombie::Zombie():
-	Object({ 1200, 200 }, "textures\\zombies\\DefaultZombie.png", { 0, 0, 128, 205 }, { 80, 120 }),
-	hp(100), velocity(2), damage(10)
-{
-	CheckTex("textures\\zombies\\DefaultZombie.png");
-}
-
-
 Zombie::~Zombie()
 {
 }

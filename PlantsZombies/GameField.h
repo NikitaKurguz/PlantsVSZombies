@@ -18,17 +18,21 @@ private:
 	};
 
 	std::vector<std::vector<Cell>> grid;
-	std::vector<Object*> lawnMowers;
 
 public:
 	GameField();
 	void Draw(sf::RenderWindow& window);
 
+	sf::Vector2f get_cell_size() const { return cell_size; }
+	sf::Vector2f get_field_origin() const { return field_origin; }
+
+
 	sf::Vector2f GetCellCenter(int row, int col) const;
 	bool IsCellFree(int row, int col) const;
-	void PlacePlant(Object* plant, int row, int col);
 
-	sf::Vector2f GetMowerPosition(int row) const;
 	sf::Vector2f GetZombieSpawnPosition(int row) const;
+	sf::Vector2f GetLawnMowerPosition(int row) const;
+	int get_rows() const { return rows; }
+	int get_cols() const { return cols; }
 };
 

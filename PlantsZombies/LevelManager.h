@@ -2,7 +2,6 @@
 #include "GameField.h"
 #include "Zombie.h"
 #include "Manager.h"
-#include <ctime>
 class LevelManager
 {
 private:
