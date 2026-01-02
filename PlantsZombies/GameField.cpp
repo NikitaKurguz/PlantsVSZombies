@@ -2,7 +2,7 @@
 #include "GameField.h"
 
 GameField::GameField():
-	rows(5), cols(9), field_size({740, 500}), field_origin({245, 75})
+	rows(5), cols(9), field_size({740, 500}), field_origin({250, 75})
 
 {
 	auto* tm = TextureManager::GetTextureInstance();
@@ -69,5 +69,10 @@ sf::Vector2f GameField::GetMowerPosition(int row) const
 {
     return { field_origin.x - (cell_size.x * 0.3f),
         field_origin.y + row * cell_size.y + cell_size.y * 0.5f };
+}
+
+sf::Vector2f GameField::GetZombieSpawnPosition(int row) const
+{
+    return { 1100.f, GetCellCenter(row, 0).y + cell_size.y * 0.25f };
 }
 

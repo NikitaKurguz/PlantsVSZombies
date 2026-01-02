@@ -29,5 +29,6 @@ public:
 	void PlacePlant(Object* plant, int row, int col);
 
 	sf::Vector2f GetMowerPosition(int row) const;
+	sf::Vector2f GetZombieSpawnPosition(int row) const;
 };
 

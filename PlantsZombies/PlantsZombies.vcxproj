@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GameField.cpp" />
+    <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -137,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameField.h" />
+    <ClInclude Include="LevelManager.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="Object.h" />
