@@ -1,13 +1,15 @@
 ﻿#include <SFML/Graphics.hpp>
 #include "Manager.h"
 #include "Zombie.h"
+#include "GameField.h"
 #include <iostream>
 using namespace std;
 using namespace sf;
 int main()
 {
     system("chcp 1251 > nul");
-	RenderWindow window(VideoMode(1280, 960), "Plants vs Zombies");
+	RenderWindow window(VideoMode(1400, 600), "Plants vs Zombies");
+    GameField field;
 
     Manager* manager = Manager::GetExemplar();
     Message* msg = new Message;
@@ -24,6 +26,7 @@ int main()
         }
         manager->UpdateObjects(0.001);
         window.clear({255, 255, 255, 255});
+        field.Draw(window);
         manager->DrawObjects(window);
         window.display();
     }
