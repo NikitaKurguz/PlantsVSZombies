@@ -1,6 +1,5 @@
 #include "LawnMower.h"
-#include "GameField.h"
-
+#include "Manager.h"
 LawnMower::LawnMower(sf::Vector2f pos, int row)
     : Object(pos,
         "textures\\Lawn_mower\\mower.png",
@@ -16,7 +15,13 @@ void LawnMower::Activate()
     isActivated = true;
 }
 
-void LawnMower::SendMessage(Message* m) {}
+void LawnMower::SendMessage(Message* m) 
+{
+    if (m->type == MessageType::Collision) {
+        if (m->collisison.obj1 == this || m->collisison.obj2 == this)
+            Activate();
+    }
+}
 
 void LawnMower::Update(float dt)
 {
