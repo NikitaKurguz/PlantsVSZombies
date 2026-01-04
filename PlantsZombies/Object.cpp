@@ -1,5 +1,5 @@
 #include "Object.h"
-
+#include "Manager.h"
 int Object::LastID = 0;
 void Object::CheckTex(const std::string& filename)
 {
@@ -75,6 +75,13 @@ int Object::GetNewID()
 int Object::GetLastID()
 {
 	return LastID;
+}
+
+bool Object::IsCollision(Object* other) const
+{
+	sf::FloatRect h1 = this->GetHitBox();
+	sf::FloatRect h2 = other->GetHitBox();
+	return h1.intersects(h2);
 }
 
 void Object::Draw(sf::RenderWindow& window)

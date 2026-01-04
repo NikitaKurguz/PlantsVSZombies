@@ -10,6 +10,7 @@ LawnMower::LawnMower(sf::Vector2f pos, int row)
 {
 }
 
+
 void LawnMower::Activate()
 {
     isActivated = true;
@@ -19,12 +20,26 @@ void LawnMower::SendMessage(Message* m)
 {
     if (m->type == MessageType::Collision) {
         if (m->collisison.obj1 == this || m->collisison.obj2 == this)
-            Activate();
+        {
+            Object* other = (m->collisison.obj1 == this) ? m->collisison.obj2 : m->collisison.obj1;
+            if (other->GetType() == CollisionObject::Zombie) Activate();
+        }
     }
 }
 
 void LawnMower::Update(float dt)
 {
-    if (!isActivated) return;
+    if (!isActivated) return; 
     Position({ GetPosition().x + velocity * dt, GetPosition().y });
+    dist_covered += velocity * dt;
+    if (dist_covered >= max_dist)
+    {
+        Message* death_msg = new Message;
+        death_msg->type = MessageType::Death;
+        death_msg->death.death_object = this;
+        death_msg->death.killer = this;
+
+        Manager::GetExemplar()->SendMessage(death_msg);
+    }
+    
 }

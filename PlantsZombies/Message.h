@@ -3,6 +3,9 @@
 enum class MessageType { 
 	Create, Death, Move, DealDamage, Collision
 };
+enum class CollisionObject {
+	Plant, Zombie, LawnMower, Other
+};
 struct Message
 {
 	MessageType type;
@@ -22,7 +25,8 @@ struct Message
 
 		struct
 		{
-			sf::Vector2f old_pos;
+			Object* mover;
+			sf::Vector2f new_pos;
 		}move;
 
 		struct

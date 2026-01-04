@@ -14,6 +14,7 @@ public:
 		float hp, float velocity, float damage, const sf::IntRect& rect, sf::Vector2f physical_size);
 	virtual ~Zombie();
 	int Get_row() const { return row; }
+	CollisionObject GetType() const override { return CollisionObject::Zombie; }
 	virtual void SendMessage(Message* m);
 	virtual void Update(float t) override;
 };

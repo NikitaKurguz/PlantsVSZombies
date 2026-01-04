@@ -29,10 +29,9 @@ void Manager::UpdateObjects(float t)
 {
 	for (auto& obj : objects) 
 		obj->Update(t);
-	Message* m;
 	while(!(messages.empty()))
 	{
-		m = messages.front();
+		Message* m = messages.front();
 		messages.erase(messages.begin());
 		switch (m->type)
 		{
@@ -49,7 +48,8 @@ void Manager::UpdateObjects(float t)
 				objects.push_back(m->create.new_object);
 		}break;
 		}
-		if (m->type == MessageType::Move || m->type == MessageType::DealDamage)
+		if (m->type == MessageType::Move || m->type == MessageType::DealDamage 
+			|| m->type == MessageType::Collision)
 		{
 			for (auto& obj : objects)
 				obj->SendMessage(m);

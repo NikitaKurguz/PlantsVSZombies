@@ -1,6 +1,6 @@
 #pragma once
 #include "Object.h"
-#include "message.h"
+#include "Message.h"
 #include <vector>
 class Manager
 {
