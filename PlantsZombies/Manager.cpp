@@ -25,6 +25,11 @@ void Manager::KillIExemplar()
 	manager_exemplar = nullptr;
 }
 
+void Manager::CheckCollisions()
+{
+
+}
+
 void Manager::UpdateObjects(float t)
 {
 	for (auto& obj : objects) 
