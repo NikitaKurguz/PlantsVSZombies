@@ -27,13 +27,28 @@ void Manager::KillIExemplar()
 
 void Manager::CheckCollisions()
 {
+	for (size_t i = 0; i < objects.size(); i++)
+	{
+		for (size_t j = i + 1; j < objects.size(); j++)
+		{
+			if (objects[i]->IsCollision(objects[j]))
+			{
+				Message* collision_msg = new Message;
+				collision_msg->type = MessageType::Collision;
+				collision_msg->collision.obj1 = objects[i];
+				collision_msg->collision.obj2 = objects[j];
 
+				SendMessage(collision_msg);
+			}
+		}
+	}
 }
 
 void Manager::UpdateObjects(float t)
 {
 	for (auto& obj : objects) 
 		obj->Update(t);
+	CheckCollisions();
 	while(!(messages.empty()))
 	{
 		Message* m = messages.front();
@@ -41,11 +56,9 @@ void Manager::UpdateObjects(float t)
 		switch (m->type)
 		{
 		case MessageType::Death: {
-			if (m->death.death_object) {
-				auto del_obj = std::find(objects.begin(), objects.end(), m->death.death_object);
-				delete* del_obj;
-				objects.erase(del_obj);
-			}
+			if (m->death.death_object) 
+				remove_objs.push_back(m->death.death_object);
+			
 		}break;
 		case MessageType::Create:
 		{
@@ -61,6 +74,13 @@ void Manager::UpdateObjects(float t)
 		}
 		delete m;
 	}
+	for (auto del_obj : remove_objs)
+	{
+		auto it = std::find(objects.begin(), objects.end(), del_obj);
+		delete* it;
+		objects.erase(it);
+	}
+	remove_objs.clear();
 
 }
 

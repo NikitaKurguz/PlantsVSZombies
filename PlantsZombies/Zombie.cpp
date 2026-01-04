@@ -1,10 +1,9 @@
 #include "Zombie.h"
-#include "GameField.h"
 #include "Manager.h"
 
 Zombie::Zombie(int row, sf::Vector2f position, const std::string& file_name, 
-	float hp, float velocity, float damage, const sf::IntRect& rect, sf::Vector2f physical_size):
-	Object(position, file_name, rect, physical_size), hp(hp), velocity(velocity), damage(damage), row(row)
+	float hp, float velocity, float damage, const sf::IntRect& rect, sf::Vector2f physical_size, GameField* field):
+	Object(position, file_name, rect, physical_size, field), hp(hp), velocity(velocity), damage(damage), row(row)
 {
 	CheckTex(file_name);
 }
@@ -14,6 +13,19 @@ Zombie::~Zombie()
 }
 
 
+
+bool Zombie::IsCollision(Object* other) const
+{
+	if (this->GetType() == CollisionObject::Zombie &&
+		other->GetType() == CollisionObject::LawnMower) 
+	{
+		if (this->Get_row() != other->Get_row()) return false;
+		return this->GetHitBox().intersects(other->GetHitBox());
+	}
+
+		
+	return false;
+}
 
 void Zombie::SendMessage(Message* m)
 {

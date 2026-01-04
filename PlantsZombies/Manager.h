@@ -10,6 +10,8 @@ private:
 	std::vector<Object*> objects;
 	std::vector<Message*> messages;
 
+	std::vector<Object*> remove_objs;
+
 	Manager();
 	~Manager();
 	Manager(const Manager&) = delete;

@@ -1,5 +1,6 @@
 #include "Object.h"
 #include "Manager.h"
+#include "GameField.h"
 int Object::LastID = 0;
 void Object::CheckTex(const std::string& filename)
 {
@@ -17,8 +18,8 @@ void Object::AutoScaling()
 	if (AutoScalingEnabled)
 		sprite.setScale(physical_size.x / bounds.width, physical_size.y / bounds.height);
 }
-Object::Object(sf::Vector2f position, const std::string& filename, const sf::IntRect& rect, sf::Vector2f physical_size) :
-	position(position), rect(rect), physical_size(physical_size)
+Object::Object(sf::Vector2f position, const std::string& filename, const sf::IntRect& rect, sf::Vector2f physical_size, GameField* field) :
+	position(position), rect(rect), physical_size(physical_size), field(field)
 {
 	id = GetNewID();
 	SetTexture(filename, rect);
@@ -77,12 +78,6 @@ int Object::GetLastID()
 	return LastID;
 }
 
-bool Object::IsCollision(Object* other) const
-{
-	sf::FloatRect h1 = this->GetHitBox();
-	sf::FloatRect h2 = other->GetHitBox();
-	return h1.intersects(h2);
-}
 
 void Object::Draw(sf::RenderWindow& window)
 {

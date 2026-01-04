@@ -8,7 +8,7 @@ LevelManager::LevelManager(GameField* field, Manager* manager):
 	for (int row = 0; row < field->get_rows(); ++row)
 	{
 		sf::Vector2f pos = field->GetLawnMowerPosition(row);
-		LawnMower* mower = new LawnMower(pos, row);
+		LawnMower* mower = new LawnMower(pos, row, field);
 
 		Message* msg = new Message;
 		msg->type = MessageType::Create;
@@ -30,7 +30,7 @@ void LevelManager::Update(float dt)
 	int row = rand() % field->get_rows();
 	sf::Vector2f spawnPos = field->GetZombieSpawnPosition(row);
 	Zombie* z = new Zombie(row, spawnPos,"textures\\zombies\\DefaultZombie.png",
-		100, 10, 10, { 0, 0, 128, 205 }, { 80, 120 });
+		100, 10, 10, { 0, 0, 128, 205 }, { 80, 120 }, field);
 
 	Message* msg = new Message;
 	msg->type = MessageType::Create;

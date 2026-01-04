@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include  "TextureManager.h"
-#include "Object.h"
+class Object;
 class GameField
 {
 private:
@@ -25,6 +25,7 @@ public:
 
 	sf::Vector2f get_cell_size() const { return cell_size; }
 	sf::Vector2f get_field_origin() const { return field_origin; }
+	sf::Vector2f get_field_size() const { return field_size; }
 
 
 	sf::Vector2f GetCellCenter(int row, int col) const;
