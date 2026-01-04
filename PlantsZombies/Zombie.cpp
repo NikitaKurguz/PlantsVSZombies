@@ -19,9 +19,9 @@ void Zombie::SendMessage(Message* m)
 {
 	if (m->type == MessageType::Collision)
 	{
-		if (m->collisison.obj1 == this || m->collisison.obj2 == this)
+		if (m->collision.obj1 == this || m->collision.obj2 == this)
 		{
-			 Object* other = (m->collisison.obj1 == this) ? m->collisison.obj2 : m->collisison.obj1;
+			 Object* other = (m->collision.obj1 == this) ? m->collision.obj2 : m->collision.obj1;
 			if ( other->GetType() == CollisionObject::LawnMower)
 			{
 				Message* death_msg = new Message;
@@ -38,11 +38,22 @@ void Zombie::SendMessage(Message* m)
 void Zombie::Update(float t)
 {
 	position.x -= t * velocity;
+	if (position.x < 100)
+	{
+		Message* death_msg = new Message;
+		death_msg->type = MessageType::Death;
+		death_msg->death.death_object = this;
+		death_msg->death.killer = this;
 
+		Manager::GetExemplar()->SendMessage(death_msg);
+		return;
+	}
 	Message* m = new Message;
 	m->type = MessageType::Move;
 	m->move.new_pos = position;
 	m->move.mover = this;
+
+	Manager::GetExemplar()->SendMessage(m);
 }
 
 

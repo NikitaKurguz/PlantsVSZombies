@@ -3,9 +3,7 @@
 enum class MessageType { 
 	Create, Death, Move, DealDamage, Collision
 };
-enum class CollisionObject {
-	Plant, Zombie, LawnMower, Other
-};
+
 struct Message
 {
 	MessageType type;
@@ -39,7 +37,7 @@ struct Message
 		{
 			Object* obj1;
 			Object* obj2;
-		} collisison;
+		} collision;
 	};
 	Message();
 };

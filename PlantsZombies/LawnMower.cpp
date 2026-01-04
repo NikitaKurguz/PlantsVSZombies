@@ -19,9 +19,9 @@ void LawnMower::Activate()
 void LawnMower::SendMessage(Message* m) 
 {
     if (m->type == MessageType::Collision) {
-        if (m->collisison.obj1 == this || m->collisison.obj2 == this)
+        if (m->collision.obj1 == this || m->collision.obj2 == this)
         {
-            Object* other = (m->collisison.obj1 == this) ? m->collisison.obj2 : m->collisison.obj1;
+            Object* other = (m->collision.obj1 == this) ? m->collision.obj2 : m->collision.obj1;
             if (other->GetType() == CollisionObject::Zombie) Activate();
         }
     }

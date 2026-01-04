@@ -30,7 +30,7 @@ void LevelManager::Update(float dt)
 	int row = rand() % field->get_rows();
 	sf::Vector2f spawnPos = field->GetZombieSpawnPosition(row);
 	Zombie* z = new Zombie(row, spawnPos,"textures\\zombies\\DefaultZombie.png",
-		100, 4, 10, { 0, 0, 128, 205 }, { 80, 120 });
+		100, 10, 10, { 0, 0, 128, 205 }, { 80, 120 });
 
 	Message* msg = new Message;
 	msg->type = MessageType::Create;

@@ -4,6 +4,9 @@
 #include <string>
 #include <iostream>
 struct Message;
+enum class CollisionObject {
+	Plant, Zombie, LawnMower, Other
+};
 class Object
 {
 private:
