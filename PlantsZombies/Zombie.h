@@ -15,8 +15,11 @@ public:
 		GameField* field);
 	virtual ~Zombie();
 	int Get_row() const override { return row; }
+	float Get_hp() const { return hp; }
 	CollisionObject GetType() const override { return CollisionObject::Zombie; }
 	bool IsCollision(Object* other) const override;
+	void TakeDmg(float dmg_amount);
+	void IsDeath();
 	virtual void SendMessage(Message* m);
 	virtual void Update(float t) override;
 };

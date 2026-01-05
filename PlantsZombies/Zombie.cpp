@@ -28,13 +28,34 @@ bool Zombie::IsCollision(Object* other) const
 	return false;
 }
 
+void Zombie::TakeDmg(float dmg_amount)
+{
+	if (hp <= 0) return;
+	hp -= dmg_amount;
+	IsDeath();
+}
+
+void Zombie::IsDeath()
+{
+	if (hp <= 0) {
+		hp = 0;
+		Message* death_msg = new Message;
+		death_msg->type = MessageType::Death;
+		death_msg->death.death_object = this;
+		death_msg->death.killer = this;
+
+		Manager* manager = Manager::GetExemplar();
+		manager->SendMessage(death_msg);
+	}
+}
+
 void Zombie::SendMessage(Message* m)
 {
 	if (m->type == MessageType::Collision)
 	{
 		if (m->collision.obj1 == this || m->collision.obj2 == this)
 		{
-			 Object* other = (m->collision.obj1 == this) ? m->collision.obj2 : m->collision.obj1;
+			Object* other = (m->collision.obj1 == this) ? m->collision.obj2 : m->collision.obj1;
 			if ( other->GetType() == CollisionObject::LawnMower)
 			{
 				Message* death_msg = new Message;
@@ -45,6 +66,10 @@ void Zombie::SendMessage(Message* m)
 				manager->SendMessage(death_msg);
 			}
 		}
+	}
+	if (m->type == MessageType::DealDamage)
+	{
+
 	}
 }
 

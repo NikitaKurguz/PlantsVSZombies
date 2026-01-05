@@ -6,7 +6,7 @@
 #include "GameField.h"
 struct Message;
 enum class CollisionObject {
-	Plant, Zombie, LawnMower, Other
+	Plant, Zombie, LawnMower, Projectile, Other
 };
 class Object
 {
