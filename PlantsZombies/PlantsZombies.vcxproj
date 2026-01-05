@@ -105,13 +105,10 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>D:\C++\ООП\sfml\SFML-2.6.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\C++\ООП\sfml\SFML-2.6.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -123,13 +120,10 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>D:\C++\ООП\sfml\SFML-2.6.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\C++\ООП\sfml\SFML-2.6.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -153,5 +147,27 @@
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Zombie.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\sfml_graphics.redist.2.6.0\build\native\sfml_graphics.redist.targets" Condition="Exists('..\packages\sfml_graphics.redist.2.6.0\build\native\sfml_graphics.redist.targets')" />
+    <Import Project="..\packages\sfml_system.redist.2.6.0\build\native\sfml_system.redist.targets" Condition="Exists('..\packages\sfml_system.redist.2.6.0\build\native\sfml_system.redist.targets')" />
+    <Import Project="..\packages\sfml_system.2.6.0\build\native\sfml_system.targets" Condition="Exists('..\packages\sfml_system.2.6.0\build\native\sfml_system.targets')" />
+    <Import Project="..\packages\sfml_window.redist.2.6.0\build\native\sfml_window.redist.targets" Condition="Exists('..\packages\sfml_window.redist.2.6.0\build\native\sfml_window.redist.targets')" />
+    <Import Project="..\packages\sfml_window.2.6.0\build\native\sfml_window.targets" Condition="Exists('..\packages\sfml_window.2.6.0\build\native\sfml_window.targets')" />
+    <Import Project="..\packages\sfml_graphics.2.6.0\build\native\sfml_graphics.targets" Condition="Exists('..\packages\sfml_graphics.2.6.0\build\native\sfml_graphics.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Используйте восстановление пакетов NuGet, чтобы скачать их.  Дополнительную информацию см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\sfml_graphics.redist.2.6.0\build\native\sfml_graphics.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml_graphics.redist.2.6.0\build\native\sfml_graphics.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\sfml_system.redist.2.6.0\build\native\sfml_system.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml_system.redist.2.6.0\build\native\sfml_system.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\sfml_system.2.6.0\build\native\sfml_system.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml_system.2.6.0\build\native\sfml_system.targets'))" />
+    <Error Condition="!Exists('..\packages\sfml_window.redist.2.6.0\build\native\sfml_window.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml_window.redist.2.6.0\build\native\sfml_window.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\sfml_window.2.6.0\build\native\sfml_window.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml_window.2.6.0\build\native\sfml_window.targets'))" />
+    <Error Condition="!Exists('..\packages\sfml_graphics.2.6.0\build\native\sfml_graphics.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml_graphics.2.6.0\build\native\sfml_graphics.targets'))" />
+  </Target>
 </Project>
