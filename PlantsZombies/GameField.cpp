@@ -48,16 +48,6 @@ bool GameField::IsCellFree(int row, int col) const
 }
 
 
-sf::Vector2f GameField::GetZombieSpawnPosition(int row) const
-{
-    return { 1100.f, GetCellCenter(row, 0).y + cell_size.y * 0.25f };
-}
-sf::Vector2f GameField::GetLawnMowerPosition(int row) const
-{
-    return {
-        field_origin.x - cell_size.x * 0.5f,
-        field_origin.y + row * cell_size.y + cell_size.y * 0.6f
-    };
-}
+
 
 

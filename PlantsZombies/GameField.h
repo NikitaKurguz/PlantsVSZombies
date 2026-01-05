@@ -31,8 +31,6 @@ public:
 	sf::Vector2f GetCellCenter(int row, int col) const;
 	bool IsCellFree(int row, int col) const;
 
-	sf::Vector2f GetZombieSpawnPosition(int row) const;
-	sf::Vector2f GetLawnMowerPosition(int row) const;
 	int get_rows() const { return rows; }
 	int get_cols() const { return cols; }
 };

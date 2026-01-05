@@ -16,6 +16,7 @@ public:
 	LevelManager(GameField* field, Manager* manager);
 	void Update(float dt);
 	~LevelManager();
-
+	sf::Vector2f GetZombieSpawnPosition(int row) const;
+	sf::Vector2f GetLawnMowerPosition(int row) const;
 };
 
