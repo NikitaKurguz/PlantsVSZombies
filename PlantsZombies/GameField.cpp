@@ -28,10 +28,8 @@ void GameField::Draw(sf::RenderWindow& window)
     for (int r = 0; r < rows; ++r)
         for (int c = 0; c < cols; ++c)
         {
-            cell.setPosition(
-                field_origin.x + c * cell_size.x,
-                field_origin.y + r * cell_size.y
-            );
+            cell.setPosition(field_origin.x + c * cell_size.x,
+                field_origin.y + r * cell_size.y);
             window.draw(cell);
         }
 }

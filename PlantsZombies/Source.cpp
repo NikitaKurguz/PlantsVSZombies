@@ -16,17 +16,19 @@ int main()
     GameField field;
     Manager* manager = Manager::GetExemplar();
     LevelManager level(&field, manager);
+    Clock clock;
     
     while (window.isOpen())
     {
+        float dt = clock.restart().asSeconds() * 8;
         sf::Event event;
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-        level.Update(0.001);
-        manager->UpdateObjects(0.001);
+        level.Update(dt);
+        manager->UpdateObjects(dt);
         window.clear({255, 255, 255, 255});
         field.Draw(window);
         manager->DrawObjects(window);
