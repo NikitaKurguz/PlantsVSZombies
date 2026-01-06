@@ -43,6 +43,7 @@ public:
 	virtual CollisionObject GetType() const = 0;
 	void Position(sf::Vector2f new_pos);
 	
+
 	void SetTexture(const std::string& texture_filename, const sf::IntRect& rect);
 	static int GetNewID();
 	static int GetLastID();

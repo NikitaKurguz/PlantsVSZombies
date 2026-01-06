@@ -21,6 +21,7 @@ public:
 	void KillIExemplar();
 	void SendCreateMsg(Object* obj);
 	void SendDeathMsg(Object* obj);
+	void SendAttackMsg(Object* attacker, Object* target, float dmg);
 	void CheckCollisions();
 	void UpdateObjects(float t);
 	void DrawObjects(sf::RenderWindow& window);

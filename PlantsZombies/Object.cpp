@@ -68,6 +68,7 @@ void Object::Position(sf::Vector2f new_pos)
 	position = new_pos;
 }
 
+
 int Object::GetNewID()
 {
 	return ++LastID;

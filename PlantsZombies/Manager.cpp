@@ -41,6 +41,13 @@ void Manager::SendDeathMsg(Object* obj)
 	msg->death.killer = obj;
 	SendMessage(msg);
 }
+void Manager::SendAttackMsg(Object* attacker, Object* target, float dmg) {
+	Message* msg = new Message;
+	msg->type = MessageType::DealDamage;
+	msg->deal_damage.attacker = attacker;
+	msg->deal_damage.target = target;
+	msg->deal_damage.damage_amount = dmg;
+}
 
 void Manager::CheckCollisions()
 {

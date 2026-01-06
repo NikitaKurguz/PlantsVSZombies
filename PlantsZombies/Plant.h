@@ -9,12 +9,17 @@ protected:
     int cost;
     int range;
     float hp;          
-    float damage;      
-    float attackSpeed; 
-    float attackTimer; 
+    float damage;
+    float attack_cooldown;
+    float attack_timer;
+    float recharge_time;
+
+    bool is_attack_type;
+    void Update_attck_timer(float t);
+    bool IsAttackReady() const { return attack_timer >= attack_cooldown; }
 public:
-    Plant(int row, sf::Vector2f position, const std::string& file_name,
-        int cost, int range, float hp, float damage, float attackSpeed, float attackTimer,
+    Plant(int row, int col, sf::Vector2f position, const std::string& file_name,
+        int cost, int range, float hp, float damage, float attack_cooldown, bool is_attack_type,
         const sf::IntRect& rect, sf::Vector2f physical_size,
         GameField* field);
 
@@ -25,14 +30,16 @@ public:
     float GetDamage() const { return damage; }
     int GetCost() const { return cost; }
     void SetDamage(float newDamage) { damage = newDamage; }
-
+    bool isAttacking() const { return is_attack_type; }
 
     CollisionObject GetType() const override { return CollisionObject::Plant; }
     bool IsCollision(Object* other) const override;
-    void IsDeath();
+    virtual void IsDeath();
+    virtual void TakeDmg(float dmg);
     virtual void SendMessage(Message* m);
     virtual void Update(float t) override;
 
-private:
-    void CreateProjectile();
+    virtual void CreateProjectile() = 0;
+    virtual void Attack(float t);
+    virtual Object* FindTargetInRange();
 };

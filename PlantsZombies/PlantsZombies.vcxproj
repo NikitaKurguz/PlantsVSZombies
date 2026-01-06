@@ -133,6 +133,7 @@
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Peashoter.cpp" />
     <ClCompile Include="Plant.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="TextureManager.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Peashoter.h" />
     <ClInclude Include="Plant.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Zombie.h" />

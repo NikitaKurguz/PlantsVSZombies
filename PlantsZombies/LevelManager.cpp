@@ -1,6 +1,6 @@
 #include "LevelManager.h"
 #include "LawnMower.h"
-#include "Plant.h"
+#include "Peashoter.h"
 
 LevelManager::LevelManager(GameField* field, Manager* manager):
 	field(field), manager(manager), max_zombies(1), 
@@ -19,8 +19,7 @@ LevelManager::LevelManager(GameField* field, Manager* manager):
 	int row1 = 3;
 	int col1 = 0;
 	sf::Vector2f plantPos = GetPlantPosition(row1, col1);
-	Plant* p1 = new Plant(row1, plantPos, "textures\\plants\\Peashoter.png",
-		100, 5, 5, 5, 5, 1, { 0,0, 442, 446 }, { 70,71 }, field);
+	Plant* p1 = new Peashoter(row1,col1, plantPos, field);
 
 	manager->SendCreateMsg(p1);
 }
@@ -37,7 +36,7 @@ void LevelManager::Update(float dt)
 	sf::Vector2f spawnPos = GetZombieSpawnPosition(row);
 
 	Zombie* z1 = new Zombie(row, spawnPos, "textures\\zombies\\DefaultZombie.png",
-		100, 4, 20, {0, 0, 128, 205}, {80, 120}, field);
+		100, 4, 20, {0, 0, 128, 205}, {80, 120}, 2, field);
 
 	manager->SendCreateMsg(z1);
 
