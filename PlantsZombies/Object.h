@@ -8,6 +8,9 @@ struct Message;
 enum class CollisionObject {
 	Plant, Zombie, LawnMower, Projectile, Other
 };
+enum class ObjectState{
+	Alive, Dying, Dead
+};
 class Object
 {
 private:

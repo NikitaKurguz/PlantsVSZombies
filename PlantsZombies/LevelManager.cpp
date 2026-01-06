@@ -27,13 +27,22 @@ void LevelManager::Update(float dt)
 
 	int row = rand() % field->get_rows();
 	sf::Vector2f spawnPos = GetZombieSpawnPosition(row);
-	Zombie* z = new Zombie(row, spawnPos,"textures\\zombies\\DefaultZombie.png",
-		100, 5, 10, { 0, 0, 128, 205 }, { 80, 120 }, field);
+	Zombie* z1 = new Zombie(row, spawnPos, "textures\\zombies\\DefaultZombie.png",
+		100, 4, 20, {0, 0, 128, 205}, {80, 120}, field);
 
 	Message* msg = new Message;
 	msg->type = MessageType::Create;
-	msg->create.new_object = z;
+	msg->create.new_object = z1;
 	manager->SendMessage(msg);
+
+	int row_ = rand() % field->get_rows();
+	sf::Vector2f spawnPos_ = GetZombieSpawnPosition(row_);
+	ZombieBucket* z2 = new ZombieBucket(row_, spawnPos_, field);
+
+	Message* msg_ = new Message;
+	msg_->type = MessageType::Create;
+	msg_->create.new_object = z2;
+	manager->SendMessage(msg_);
 
 	zombies_spawned++;
 }

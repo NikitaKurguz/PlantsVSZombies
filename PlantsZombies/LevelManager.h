@@ -1,6 +1,7 @@
 #pragma once
 #include "GameField.h"
 #include "Zombie.h"
+#include "ZombieBucket.h"
 #include "Manager.h"
 class LevelManager
 {
