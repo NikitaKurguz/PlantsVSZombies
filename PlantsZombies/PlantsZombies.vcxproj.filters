@@ -45,6 +45,9 @@
     <ClCompile Include="ZombieBucket.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Plant.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Object.h">
@@ -72,6 +75,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="ZombieBucket.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Plant.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

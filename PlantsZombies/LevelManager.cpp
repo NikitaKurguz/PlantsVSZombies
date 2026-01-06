@@ -1,5 +1,6 @@
 #include "LevelManager.h"
 #include "LawnMower.h"
+#include "Plant.h"
 
 LevelManager::LevelManager(GameField* field, Manager* manager):
 	field(field), manager(manager), max_zombies(1), 
@@ -31,10 +32,21 @@ void LevelManager::Update(float dt)
 	Zombie* z1 = new Zombie(row, spawnPos, "textures\\zombies\\DefaultZombie.png",
 		100, 4, 20, {0, 0, 128, 205}, {80, 120}, field);
 
+	int row1 = 1;
+	int col1 = 1;
+	sf::Vector2f plantPos = GetPlantPosition(row1, col1);
+	Plant* p1 = new Plant(row, plantPos, "textures\\plants\\pea.jpg",
+		100, 5, 5, 5, 5, 1, { 0,0, 442, 446 }, { 80,80 }, field);
+
 	Message* msg = new Message;
 	msg->type = MessageType::Create;
 	msg->create.new_object = z1;
 	manager->SendMessage(msg);
+
+	Message* msg2 = new Message;
+	msg2->type = MessageType::Create;
+	msg2->create.new_object = p1;
+	manager->SendMessage(msg2);
 
 	int row_ = rand() % field->get_rows();
 	sf::Vector2f spawnPos_ = GetZombieSpawnPosition(row_);
@@ -63,4 +75,9 @@ sf::Vector2f LevelManager::GetLawnMowerPosition(int row) const
 		field->get_field_origin().x - field->get_cell_size().x * 0.5f,
 		field->get_field_origin().y + row * field->get_cell_size().y + field->get_cell_size().y * 0.6f
 	};
+}
+
+sf::Vector2f LevelManager::GetPlantPosition(int row, int col) const
+{
+	return field->GetCellCenter(row, col);
 }

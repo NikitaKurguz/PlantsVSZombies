@@ -19,5 +19,6 @@ public:
 	~LevelManager();
 	sf::Vector2f GetZombieSpawnPosition(int row) const;
 	sf::Vector2f GetLawnMowerPosition(int row) const;
+	sf::Vector2f GetPlantPosition(int row, int col) const;
 };
 
