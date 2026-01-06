@@ -46,6 +46,8 @@ void LevelManager::Update(float dt)
 	manager->SendMessage(msg_);
 
 	zombies_spawned++;
+
+
 }
 
 LevelManager::~LevelManager()
