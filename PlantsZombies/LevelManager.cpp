@@ -16,6 +16,13 @@ LevelManager::LevelManager(GameField* field, Manager* manager):
 		msg->create.new_object = mower;
 		manager->SendMessage(msg);
 	}
+	int row1 = 3;
+	int col1 = 0;
+	sf::Vector2f plantPos = GetPlantPosition(row1, col1);
+	Plant* p1 = new Plant(row1, plantPos, "textures\\plants\\Peashoter.png",
+		100, 5, 5, 5, 5, 1, { 0,0, 442, 446 }, { 70,71 }, field);
+
+	manager->SendCreateMsg(p1);
 }
 
 void LevelManager::Update(float dt)
@@ -32,34 +39,15 @@ void LevelManager::Update(float dt)
 	Zombie* z1 = new Zombie(row, spawnPos, "textures\\zombies\\DefaultZombie.png",
 		100, 4, 20, {0, 0, 128, 205}, {80, 120}, field);
 
-	int row1 = 1;
-	int col1 = 1;
-	sf::Vector2f plantPos = GetPlantPosition(row1, col1);
-	Plant* p1 = new Plant(row, plantPos, "textures\\plants\\pea.jpg",
-		100, 5, 5, 5, 5, 1, { 0,0, 442, 446 }, { 80,80 }, field);
-
-	Message* msg = new Message;
-	msg->type = MessageType::Create;
-	msg->create.new_object = z1;
-	manager->SendMessage(msg);
-
-	Message* msg2 = new Message;
-	msg2->type = MessageType::Create;
-	msg2->create.new_object = p1;
-	manager->SendMessage(msg2);
+	manager->SendCreateMsg(z1);
 
 	int row_ = rand() % field->get_rows();
 	sf::Vector2f spawnPos_ = GetZombieSpawnPosition(row_);
 	ZombieBucket* z2 = new ZombieBucket(row_, spawnPos_, field);
 
-	Message* msg_ = new Message;
-	msg_->type = MessageType::Create;
-	msg_->create.new_object = z2;
-	manager->SendMessage(msg_);
+	manager->SendCreateMsg(z2);
 
 	zombies_spawned++;
-
-
 }
 
 LevelManager::~LevelManager()
@@ -79,5 +67,6 @@ sf::Vector2f LevelManager::GetLawnMowerPosition(int row) const
 
 sf::Vector2f LevelManager::GetPlantPosition(int row, int col) const
 {
-	return field->GetCellCenter(row, col);
+	return { field->GetCellCenter(row, col).x, field->GetCellCenter(row, col).y 
+		+ field->get_cell_size().y * 0.2f};
 }

@@ -19,7 +19,8 @@ private:
 public:
 	static Manager* GetExemplar();
 	void KillIExemplar();
-	
+	void SendCreateMsg(Object* obj);
+	void SendDeathMsg(Object* obj);
 	void CheckCollisions();
 	void UpdateObjects(float t);
 	void DrawObjects(sf::RenderWindow& window);

@@ -25,6 +25,23 @@ void Manager::KillIExemplar()
 	manager_exemplar = nullptr;
 }
 
+void Manager::SendCreateMsg(Object* obj)
+{
+	Message* msg = new Message;
+	msg->type = MessageType::Create;
+	msg->create.new_object = obj;
+	SendMessage(msg);
+}
+
+void Manager::SendDeathMsg(Object* obj)
+{
+	Message* msg = new Message;
+	msg->type = MessageType::Death;
+	msg->death.death_object = obj;
+	msg->death.killer = obj;
+	SendMessage(msg);
+}
+
 void Manager::CheckCollisions()
 {
 	for (size_t i = 0; i < objects.size(); i++)
