@@ -34,5 +34,6 @@ int main()
         manager->DrawObjects(window);
         window.display();
     }
+
 	return 0;
 }
