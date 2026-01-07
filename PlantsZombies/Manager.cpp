@@ -47,6 +47,7 @@ void Manager::SendAttackMsg(Object* attacker, Object* target, float dmg) {
 	msg->deal_damage.attacker = attacker;
 	msg->deal_damage.target = target;
 	msg->deal_damage.damage_amount = dmg;
+	SendMessage(msg);
 }
 
 void Manager::CheckCollisions()

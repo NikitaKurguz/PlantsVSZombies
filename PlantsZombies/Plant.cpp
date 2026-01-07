@@ -45,6 +45,7 @@ void Plant::TakeDmg(float dmg)
 {
     if (hp <= 0) return;
     hp -= dmg;
+    sprite.setColor(sf::Color(255, 150, 150, 255));
     IsDeath();
 }
 
@@ -55,10 +56,33 @@ void Plant::SendMessage(Message* m)
         if (m->deal_damage.target == this)
             TakeDmg(m->deal_damage.damage_amount);
     }
+    if (m->type == MessageType::Collision)
+    {
+        if (m->collision.obj1 == this || m->collision.obj2 == this)
+        {
+            Object* other = (m->collision.obj1 == this) ? m->collision.obj2 : m->collision.obj1;
+            if (other->GetType() == CollisionObject::Zombie)
+            {
+
+            }
+        }
+    }
 
 }
 void Plant::Update(float t)
 {
+    if (sprite.getColor() != sf::Color::White)
+    {
+        static float color_timer = 0;
+        color_timer += t;
+        if (color_timer >= 0.1f)
+        {
+            sprite.setColor(sf::Color::White);
+            color_timer = 0;
+        }
+    }
+    /*if (is_attack_type)
+        Attack(t);*/
 }
 
 void Plant::Attack(float t)

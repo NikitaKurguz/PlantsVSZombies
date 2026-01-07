@@ -37,6 +37,7 @@ void Zombie::StartAttack(Object* plant)
 {
 	if (!plant || plant->GetType() != CollisionObject::Plant)
 		return;
+	sprite.setColor(sf::Color(255, 200, 200, 255));
 	isAttacking = true; target = plant;
 	attack_timer = 0;
 }
@@ -44,6 +45,7 @@ void Zombie::StartAttack(Object* plant)
 void Zombie::StopAttack()
 {
 	isAttacking = false; target = nullptr; attack_timer = 0;
+	sprite.setColor(sf::Color::White);
 }
 
 void Zombie::SendAttackToObject()
@@ -86,6 +88,7 @@ void Zombie::SendMessage(Message* m)
 			if (other->GetType() == CollisionObject::Plant)
 			{
 				StartAttack(other);
+				
 			}
 		}
 	}
@@ -105,7 +108,7 @@ void Zombie::Update(float t)
 	if (isAttacking && target != nullptr)
 	{
 		attack_timer += t;
-		if (attack_timer >= 1 / attack_speed) {
+		if (attack_timer >=  attack_speed) {
 			SendAttackToObject();
 			attack_timer = 0;
 		}
@@ -113,6 +116,10 @@ void Zombie::Update(float t)
 	else
 	{
 		Move(t);
+		if (position.x < 100) {
+			Manager::GetExemplar()->SendDeathMsg(this);
+			return;
+		}
 
 		Message* m = new Message;
 		m->type = MessageType::Move;
