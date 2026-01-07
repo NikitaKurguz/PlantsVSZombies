@@ -35,27 +35,33 @@ void Zombie::TakeDmg(float dmg_amount)
 
 void Zombie::StartAttack(Object* plant)
 {
-	if (!plant || plant->GetType() != CollisionObject::Plant)
-		return;
-	sprite.setColor(sf::Color(255, 200, 200, 255));
-	isAttacking = true; target = plant;
+	if (!plant || !plant->isAlive) return;
+	if (isAttacking) return;
+
+	targetID = plant->GetID();
+	isAttacking = true;
 	attack_timer = 0;
+	sprite.setColor(sf::Color(255, 200, 200));
 }
 
 void Zombie::StopAttack()
 {
-	isAttacking = false; target = nullptr; attack_timer = 0;
+	isAttacking = false;
+	targetID = -1;
+	attack_timer = 0;
 	sprite.setColor(sf::Color::White);
 }
 
 void Zombie::SendAttackToObject()
 {
+	Object* target = GetTarget();
 	if (!target || target->GetType() != CollisionObject::Plant)
 	{
 		StopAttack();
 		return;
 	}
-	Manager::GetExemplar()->SendAttackMsg(this, target, this->damage);
+
+	Manager::GetExemplar()->SendAttackMsg(this, target, damage);
 }
 
 void Zombie::IsDeath()
@@ -73,42 +79,54 @@ void Zombie::Move(float t)
 		position.x -= t * velocity;
 }
 
+Object* Zombie::GetTarget()
+{
+	if (targetID < 0) return nullptr;
+	return Manager::GetExemplar()->FindObjectByID(targetID);
+}
+
 void Zombie::SendMessage(Message* m)
 {
 	if (m->type == MessageType::Collision)
 	{
 		if (m->collision.obj1 == this || m->collision.obj2 == this)
 		{
-			Object* other = (m->collision.obj1 == this) ? m->collision.obj2 : m->collision.obj1;
-			if ( other->GetType() == CollisionObject::LawnMower)
-			{
-				Manager* manager = Manager::GetExemplar();
-				manager->SendDeathMsg(this);
-			}
+			Object* other = (m->collision.obj1 == this) 
+				? m->collision.obj2 : m->collision.obj1;
+
 			if (other->GetType() == CollisionObject::Plant)
-			{
 				StartAttack(other);
-				
-			}
+
+			if (other->GetType() == CollisionObject::LawnMower)
+				Manager::GetExemplar()->SendDeathMsg(this);
 		}
 	}
-	if (m->type == MessageType::Death) {
-		if (m->death.death_object == target)
+
+	if (m->type == MessageType::Death)
+	{
+		if (m->death.death_object->GetID() == targetID)
 			StopAttack();
 	}
+
 	if (m->type == MessageType::DealDamage)
 	{
 		if (m->deal_damage.target == this)
 			TakeDmg(m->deal_damage.damage_amount);
 	}
 }
-
 void Zombie::Update(float t)
 {
-	if (isAttacking && target != nullptr)
+	if (isAttacking)
 	{
+		Object* target = GetTarget();
+		if (!target)
+		{
+			StopAttack();
+			return;
+		}
 		attack_timer += t;
-		if (attack_timer >=  attack_speed) {
+		if (attack_timer >= attack_speed)
+		{
 			SendAttackToObject();
 			attack_timer = 0;
 		}
@@ -116,18 +134,12 @@ void Zombie::Update(float t)
 	else
 	{
 		Move(t);
-		if (position.x < 100) {
-			Manager::GetExemplar()->SendDeathMsg(this);
-			return;
-		}
-
 		Message* m = new Message;
 		m->type = MessageType::Move;
-		m->move.new_pos = position;
 		m->move.mover = this;
+		m->move.new_pos = position;
 		Manager::GetExemplar()->SendMessage(m);
 	}
-	
 }
 
 

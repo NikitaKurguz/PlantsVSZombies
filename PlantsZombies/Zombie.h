@@ -13,9 +13,10 @@ protected:
 	float attack_timer = 0;
 
 	bool isAttacking = false;
-	Object* target = nullptr;
+	int targetID = -1;
 	void IsDeath();
 	virtual void Move(float t);
+	Object* GetTarget();
 public:
 	Zombie(int row, sf::Vector2f position, const std::string& file_name,
 		float hp, float velocity, float damage, const sf::IntRect& rect, sf::Vector2f physical_size, float attack_speed,

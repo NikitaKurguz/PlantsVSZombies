@@ -54,20 +54,34 @@ void Manager::CheckCollisions()
 {
 	for (size_t i = 0; i < objects.size(); i++)
 	{
+		if (!objects[i] || !objects[i]->isAlive) continue;
+
 		for (size_t j = i + 1; j < objects.size(); j++)
 		{
+			if (!objects[j] || !objects[j]->isAlive) continue;
+
 			if (objects[i]->IsCollision(objects[j]))
 			{
 				Message* collision_msg = new Message;
 				collision_msg->type = MessageType::Collision;
 				collision_msg->collision.obj1 = objects[i];
 				collision_msg->collision.obj2 = objects[j];
-
 				SendMessage(collision_msg);
 			}
 		}
 	}
 }
+
+Object* Manager::FindObjectByID(int id)
+{
+	for (auto* obj : objects)
+	{
+		if (obj && obj->GetID() == id && obj->isAlive)
+			return obj;
+	}
+	return nullptr;
+}
+
 
 void Manager::UpdateObjects(float t)
 {
@@ -80,11 +94,16 @@ void Manager::UpdateObjects(float t)
 		messages.erase(messages.begin());
 		switch (m->type)
 		{
-		case MessageType::Death: {
-			if (m->death.death_object) 
-				remove_objs.push_back(m->death.death_object);
-			
-		}break;
+		case MessageType::Death:
+		{
+			Object* obj = m->death.death_object;
+			if (!obj) break;
+			if (std::find(remove_objs.begin(), remove_objs.end(), obj) == remove_objs.end())
+			{
+				remove_objs.push_back(obj);
+			}
+		}
+		break;
 		case MessageType::Create:
 		{
 			if (m->create.new_object)
@@ -95,15 +114,23 @@ void Manager::UpdateObjects(float t)
 			|| m->type == MessageType::Collision)
 		{
 			for (auto& obj : objects)
+			{
+				if (!obj) continue;
+				if (!obj->isAlive) continue;
 				obj->SendMessage(m);
+			}
 		}
 		delete m;
 	}
 	for (auto del_obj : remove_objs)
 	{
 		auto it = std::find(objects.begin(), objects.end(), del_obj);
-		delete* it;
-		objects.erase(it);
+		if (it != objects.end())
+		{
+			delete* it;
+			objects.erase(it);
+		}
+		
 	}
 	remove_objs.clear();
 

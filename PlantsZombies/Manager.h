@@ -16,6 +16,7 @@ private:
 	~Manager();
 	Manager(const Manager&) = delete;
 	Manager& operator=(const Manager&) = delete;
+	
 public:
 	static Manager* GetExemplar();
 	void KillIExemplar();
@@ -23,6 +24,7 @@ public:
 	void SendDeathMsg(Object* obj);
 	void SendAttackMsg(Object* attacker, Object* target, float dmg);
 	void CheckCollisions();
+	Object* FindObjectByID(int id);
 	void UpdateObjects(float t);
 	void DrawObjects(sf::RenderWindow& window);
 	void SendMessage(Message* m);

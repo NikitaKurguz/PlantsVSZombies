@@ -35,6 +35,7 @@ public:
 	Object(sf::Vector2f position, const std::string& filename, const sf::IntRect& rect, sf::Vector2f physical_size,
 	GameField* field);
 	Object(const Object& other);
+	bool isAlive = true;
 	virtual ~Object();
 
 	int GetID() const { return id; }

@@ -34,8 +34,8 @@ bool Plant::IsCollision(Object* other) const
 
 void Plant::IsDeath()
 {
-    if (hp <= 0) {
-        hp = 0;
+    if (hp <= 0 && isAlive) {
+        isAlive = false;
         Manager* manager = Manager::GetExemplar();
         manager->SendDeathMsg(this);
     }
