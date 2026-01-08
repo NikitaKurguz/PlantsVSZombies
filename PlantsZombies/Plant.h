@@ -12,7 +12,7 @@ protected:
     float damage;
     float attack_cooldown;
     float attack_timer;
-    float recharge_time;
+    bool is_attacking_type;
 
     bool is_attack_type;
     void Update_attck_timer(float t);
@@ -42,4 +42,6 @@ public:
     virtual void CreateProjectile() = 0;
     virtual void Attack(float t);
     virtual Object* FindTargetInRange();
+
+
 };
