@@ -135,6 +135,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Peashoter.cpp" />
     <ClCompile Include="Plant.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Zombie.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Peashoter.h" />
     <ClInclude Include="Plant.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Zombie.h" />
     <ClInclude Include="ZombieBucket.h" />
