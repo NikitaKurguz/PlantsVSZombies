@@ -13,8 +13,9 @@ protected:
     float attack_cooldown;
     float attack_timer;
     bool is_attacking_type;
-
+    bool can_shoot;
     bool is_attack_type;
+
     void Update_attck_timer(float t);
     bool IsAttackReady() const { return attack_timer >= attack_cooldown; }
 public:
@@ -38,6 +39,9 @@ public:
     virtual void TakeDmg(float dmg);
     virtual void SendMessage(Message* m);
     virtual void Update(float t) override;
+
+    void SetCanShoot(bool value) { can_shoot = value; }
+    bool CanShoot() const { return can_shoot; }
 
     virtual void CreateProjectile() = 0;
     virtual void Attack(float t);

@@ -12,7 +12,7 @@ Plant::Plant(int row, int col, sf::Vector2f position, const std::string& file_na
     Object(position, file_name, rect, physical_size, field),
     row(row), col(col), cost(cost), range(range), hp(hp), damage(damage),
     attack_cooldown(attack_cooldown), is_attack_type(is_attack_type),
-    attack_timer(0)
+    attack_timer(0),can_shoot(true)
 {
     CheckTex(file_name);
 }
@@ -87,11 +87,13 @@ void Plant::Update(float t)
 
 void Plant::Attack(float t)
 {
+    if (!can_shoot) { return; }
     attack_timer += t;
 
     if (IsAttackReady())
     {
         CreateProjectile();      // Создаем снаряд
+        can_shoot = false;
         attack_timer = 0.0f;    // Сбрасываем таймер
     }
     

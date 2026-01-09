@@ -1,5 +1,6 @@
 #pragma once
 #include "Object.h"
+class Plant;
 
 class Projectile : public Object
 {
@@ -10,6 +11,7 @@ protected:
     float traveled_distance; 
 
     sf::Vector2f direction; 
+    Plant* shooter_plant;
 
 private:
     void CheckFieldBounds(); 
@@ -23,6 +25,7 @@ public:
         GameField* field,
         float damage,
         float speed,
+        Plant* shooter_plant = nullptr,
         float max_distance = 1000.0f);
 
     Projectile(const Projectile& other);
@@ -38,4 +41,5 @@ public:
     float GetSpeed() const { return speed; }
     float GetTraveledDistance() const { return traveled_distance; }
     bool HasReachedMaxDistance() const { return traveled_distance >= max_distance; }
+    Plant* GetShooterPlant() const { return shooter_plant; }
 };

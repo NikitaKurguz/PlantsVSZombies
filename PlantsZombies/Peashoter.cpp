@@ -49,7 +49,8 @@ void Peashoter::CreateProjectile()
         { 80, 45 },                           
         Get_field(),                        
         GetDamage(),                        
-        10.0f,                             
+        10.0f,  
+        this,
         800.0f                              
     );
 
