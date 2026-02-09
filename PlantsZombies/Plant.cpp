@@ -92,9 +92,9 @@ void Plant::Attack(float t)
 
     if (IsAttackReady())
     {
-        CreateProjectile();      // Создаем снаряд
+        CreateProjectile();
         can_shoot = false;
-        attack_timer = 0.0f;    // Сбрасываем таймер
+        attack_timer = 0;
     }
     
 }

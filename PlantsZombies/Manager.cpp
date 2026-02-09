@@ -60,7 +60,8 @@ void Manager::CheckCollisions()
 		{
 			if (!objects[j] || !objects[j]->isAlive) continue;
 
-			if (objects[i]->IsCollision(objects[j]))
+			if (objects[i]->IsCollision(objects[j]) ||
+				objects[j]->IsCollision(objects[i]))
 			{
 				Message* collision_msg = new Message;
 				collision_msg->type = MessageType::Collision;

@@ -1,21 +1,20 @@
 #pragma once
 #include "Object.h"
-class Plant;
 
 class Projectile : public Object
 {
 protected:
-    float damage;           
-    float speed;           
-    float max_distance;    
-    float traveled_distance; 
-
-    sf::Vector2f direction; 
-    Plant* shooter_plant;
+    float damage;
+    float speed;
+    float max_distance;
+    float traveled_distance;
+    sf::Vector2f direction;
 
 private:
-    void CheckFieldBounds(); 
-    void HandleCollisionMessage(Message* m); 
+    void CheckFieldBounds();
+
+protected:
+    virtual void OnHit(Object* other) = 0;
 
 public:
     Projectile(sf::Vector2f position,
@@ -25,21 +24,12 @@ public:
         GameField* field,
         float damage,
         float speed,
-        Plant* shooter_plant = nullptr,
-        float max_distance = 1000.0f);
+        float max_distance = 1000);
 
-    Projectile(const Projectile& other);
+    virtual ~Projectile() = default;
 
-    virtual ~Projectile();
-
-    virtual void Update(float dt) override;
-    virtual CollisionObject GetType() const override;
-    virtual bool IsCollision(Object* other) const override;
-    virtual void SendMessage(Message* m) override;
-
-    float GetDamage() const { return damage; }
-    float GetSpeed() const { return speed; }
-    float GetTraveledDistance() const { return traveled_distance; }
-    bool HasReachedMaxDistance() const { return traveled_distance >= max_distance; }
-    Plant* GetShooterPlant() const { return shooter_plant; }
+    void Update(float dt) override;
+    CollisionObject GetType() const override;
+    bool IsCollision(Object* other) const override;
+    void SendMessage(Message* m) override;
 };
