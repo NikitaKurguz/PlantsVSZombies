@@ -134,7 +134,7 @@
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Pea.cpp" />
-    <ClCompile Include="Peashoter.cpp" />
+    <ClCompile Include="Peashooter.cpp" />
     <ClCompile Include="Plant.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Source.cpp" />
@@ -150,7 +150,7 @@
     <ClInclude Include="Message.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Pea.h" />
-    <ClInclude Include="Peashoter.h" />
+    <ClInclude Include="Peashooter.h" />
     <ClInclude Include="Plant.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="TextureManager.h" />

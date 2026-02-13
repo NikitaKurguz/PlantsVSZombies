@@ -12,7 +12,7 @@ Plant::Plant(int row, int col, sf::Vector2f position, const std::string& file_na
     Object(position, file_name, rect, physical_size, field),
     row(row), col(col), cost(cost), range(range), hp(hp), damage(damage),
     attack_cooldown(attack_cooldown), is_attack_type(is_attack_type),
-    attack_timer(0),can_shoot(true)
+    attack_timer(0)
 {
     CheckTex(file_name);
 }
@@ -21,6 +21,10 @@ Plant::~Plant()
 {
 }
 
+void Plant::OnProjectileDestroyed()
+{
+    projectile_active = false;
+}
 
 bool Plant::IsCollision(Object* other) const
 {
@@ -67,39 +71,69 @@ void Plant::SendMessage(Message* m)
             }
         }
     }
+    if (m->type == MessageType::Death)
+    {
+        if (m->death.death_object->GetID() == targetID)
+            StopAttack();
+    }
+
 
 }
 void Plant::Update(float t)
 {
     if (sprite.getColor() != sf::Color::White)
     {
-        static float color_timer = 0;
         color_timer += t;
-        if (color_timer >= 0.1f)
+        if (color_timer >= 0.1)
         {
             sprite.setColor(sf::Color::White);
             color_timer = 0;
         }
     }
+
     if (is_attack_type)
         Attack(t);
 }
 
+
 void Plant::Attack(float t)
 {
-    if (!can_shoot) { return; }
     attack_timer += t;
 
-    if (IsAttackReady())
+    Object* target = FindTargetInRange();
+    if (!target)
+        return;
+
+    if (attack_timer >= attack_cooldown)
     {
-        CreateProjectile();
-        can_shoot = false;
-        attack_timer = 0;
+        if (!projectile_active)
+        {
+            CreateProjectile(target);
+            projectile_active = true;
+            attack_timer = 0;
+        }
     }
-    
 }
 
-Object* Plant::FindTargetInRange()
+Object* Plant::GetTarget()
 {
-    return nullptr;
+    if (targetID < 0) return nullptr;
+    return Manager::GetExemplar()->FindObjectByID(targetID);
 }
+
+void Plant::StartAttack(Object* target)
+{
+    if (!target || !target->isAlive) return;
+
+    targetID = target->GetID();
+    isAttacking = true;
+    attack_timer = 0;
+}
+
+void Plant::StopAttack()
+{
+    isAttacking = false;
+    targetID = -1;
+    attack_timer = 0;
+}
+

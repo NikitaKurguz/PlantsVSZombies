@@ -1,6 +1,6 @@
 #include "LevelManager.h"
 #include "LawnMower.h"
-#include "Peashoter.h"
+#include "Peashooter.h"
 
 LevelManager::LevelManager(GameField* field, Manager* manager):
 	field(field), manager(manager), max_zombies(1), 
@@ -19,7 +19,7 @@ LevelManager::LevelManager(GameField* field, Manager* manager):
 	int row1 = 3;
 	int col1 = 0;
 	sf::Vector2f plantPos = GetPlantPosition(row1, col1);
-	Plant* p1 = new Peashoter(row1,col1, plantPos, field);
+	Plant* p1 = new Peashooter(row1,col1, plantPos, field);
 
 	manager->SendCreateMsg(p1);
 }

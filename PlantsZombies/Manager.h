@@ -20,6 +20,7 @@ private:
 public:
 	static Manager* GetExemplar();
 	void KillIExemplar();
+	const std::vector<Object*>& GetObjects() const { return objects; }
 	void SendCreateMsg(Object* obj);
 	void SendDeathMsg(Object* obj);
 	void SendAttackMsg(Object* attacker, Object* target, float dmg);
