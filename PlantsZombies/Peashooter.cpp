@@ -6,7 +6,7 @@
 
 Peashooter::Peashooter(int row, int col, sf::Vector2f pos, GameField* field) :
     Plant(row, col, pos, "textures\\plants\\Peashoter.png", 100,                          
-        field->get_field_size().x, 100, 40, 22, true,                    
+        field->get_field_size().x, 100, 50, 22, true,                    
         { 0, 0, 442, 426 }, { 70, 71 }, field)
 {
 }

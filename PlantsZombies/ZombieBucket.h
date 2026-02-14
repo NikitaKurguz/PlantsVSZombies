@@ -4,10 +4,12 @@ class ZombieBucket : public Zombie
 {
 private:
 	float bucket_hp;
-	float max_bucket_hp = 200;
+	float max_bucket_hp = 100;
 public:
 	ZombieBucket(int row, sf::Vector2f position, GameField* field);
-	virtual void SendMessage(Message* m);
-	virtual void Update(float t) override;
+	void SendMessage(Message* m);
+	void Update(float t) override;
+	void TakeDmg(float dmg_amount) override;
+	void IsDeath() override;
 };
 

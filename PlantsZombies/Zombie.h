@@ -14,7 +14,7 @@ protected:
 
 	bool isAttacking = false;
 	int targetID = -1;
-	void IsDeath();
+	virtual void IsDeath();
 	virtual void Move(float t);
 	Object* GetTarget();
 public:
