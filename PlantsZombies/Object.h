@@ -7,8 +7,9 @@
 #include "GameField.h"
 struct Message;
 enum class CollisionObject {
-	Plant, Zombie, LawnMower, Projectile, Other
+	Plant, Zombie, LawnMower, Projectile, Sun, Collector, Other
 };
+
 enum class ObjectState{
 	Alive, Dying, Dead
 };

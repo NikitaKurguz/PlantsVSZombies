@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Collector.cpp" />
     <ClCompile Include="GameField.cpp" />
     <ClCompile Include="LawnMower.cpp" />
     <ClCompile Include="LevelManager.cpp" />
@@ -138,11 +139,15 @@
     <ClCompile Include="Plant.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Sun.cpp" />
+    <ClCompile Include="Sunflower.cpp" />
+    <ClCompile Include="SunManager.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Zombie.cpp" />
     <ClCompile Include="ZombieBucket.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Collector.h" />
     <ClInclude Include="GameField.h" />
     <ClInclude Include="LawnMower.h" />
     <ClInclude Include="LevelManager.h" />
@@ -153,6 +158,9 @@
     <ClInclude Include="Peashooter.h" />
     <ClInclude Include="Plant.h" />
     <ClInclude Include="Projectile.h" />
+    <ClInclude Include="Sun.h" />
+    <ClInclude Include="Sunflower.h" />
+    <ClInclude Include="SunManager.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Zombie.h" />
     <ClInclude Include="ZombieBucket.h" />
