@@ -5,7 +5,7 @@
 Sunflower::Sunflower(int row, int col, sf::Vector2f pos, GameField* field) :
     Plant(row, col, pos, "textures\\plants\\SF.jpg",
         50, 0, 100, 0, 0, false,  // cost=50, не атакует
-        { 0, 0, 318, 334 }, { 70, 80 }, field)
+        { 0, 0, 736, 790 }, { 70, 80 }, field)
 {
     CheckTex("textures\\plants\\SF.jpg");
 }

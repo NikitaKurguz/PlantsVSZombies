@@ -3,7 +3,7 @@
 
 Sun::Sun(sf::Vector2f position, GameField* field, float value, bool falling) :
     Object(position, "textures/plants/Sun.png",
-        { 0, 0, 400, 400 }, { 40, 40 }, field),
+        { 0, 0, 800, 800 }, { 40, 40 }, field),
     value(value), is_falling(falling), life_timer(0), lifetime(10.0f)
 {
     CheckTex("textures/plants/Sun.png");
