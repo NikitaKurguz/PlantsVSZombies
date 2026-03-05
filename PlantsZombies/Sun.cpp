@@ -13,10 +13,7 @@ void Sun::Update(float dt)
 {
     if (is_falling)
     {
-        // Падаем вниз
         Position({ GetPosition().x, GetPosition().y + fall_speed * dt });
-
-        // Проверяем, не достигли ли уровня земли
         if (field)
         {
             float ground_y = field->get_field_origin().y +
@@ -29,15 +26,11 @@ void Sun::Update(float dt)
             }
         }
     }
-
-    // Таймер жизни
     life_timer += dt;
     if (life_timer >= lifetime)
     {
         Manager::GetExemplar()->SendDeathMsg(this);
     }
-
-    // Анимация мерцания перед исчезновением
     if (lifetime - life_timer < 2.0f)
     {
         float alpha = 255 * (1.0f - (life_timer - (lifetime - 2.0f)) / 2.0f);
@@ -69,5 +62,4 @@ bool Sun::IsCollision(Object* other) const
 void Sun::Collect()
 {
     Manager::GetExemplar()->SendDeathMsg(this);
-    // Здесь будет добавление солнышек игроку
 }

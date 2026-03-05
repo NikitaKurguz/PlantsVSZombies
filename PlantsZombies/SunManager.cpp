@@ -5,7 +5,6 @@
 
 SunManager::SunManager(GameField* field) : field(field), font_loaded(false)
 {
-    // Пытаемся загрузить шрифт
     font_loaded = font.loadFromFile("fonts/arial.ttf");
     if (font_loaded)
     {

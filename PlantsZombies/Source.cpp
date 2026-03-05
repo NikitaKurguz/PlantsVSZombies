@@ -1,89 +1,96 @@
 ﻿#include <SFML/Graphics.hpp>
 #include "Manager.h"
-#include "Zombie.h"
 #include "GameField.h"
 #include "LevelManager.h"
 #include "SunManager.h"
-#include "Sunflower.h"
-#include "Collector.h"
-#include "Sun.h"  
+#include "PlantingInterface.h"
+#include "Collector.h"    
+#include "Sun.h" 
 #include <iostream>
 #include <ctime>
-using namespace std;
-using namespace sf;
 
 int main()
 {
     srand(time(nullptr));
     system("chcp 1251 > nul");
 
-    RenderWindow window(VideoMode(1024, 600), "Plants vs Zombies");
+    sf::RenderWindow window(sf::VideoMode(1024, 600), "Plants vs Zombies");
 
     GameField field;
     Manager* manager = Manager::GetExemplar();
     LevelManager level(&field, manager);
     SunManager sunManager(&field);
+    PlantingInterface plantingInterface(&field, &sunManager, &level);
 
-    // Создаем коллектор для сбора солнышек
     Collector* collector = new Collector(&field);
     manager->SendCreateMsg(collector);
 
-    // Добавим тестовый подсолнух
-    int sunflower_row = 2;
-    int sunflower_col = 3;
-    sf::Vector2f sunflowerPos = level.GetPlantPosition(sunflower_row, sunflower_col);
-    Sunflower* sunflower = new Sunflower(sunflower_row, sunflower_col, sunflowerPos, &field);
-    manager->SendCreateMsg(sunflower);
-
-    Clock clock;
+    sf::Clock clock;
 
     while (window.isOpen())
     {
         float dt = clock.restart().asSeconds() * 8;
-        Event event;
+        sf::Event event;
 
         while (window.pollEvent(event))
         {
-            if (event.type == Event::Closed)
+            if (event.type == sf::Event::Closed)
                 window.close();
 
-            // Обработка кликов для сбора солнышек
-            if (event.type == Event::MouseButtonPressed &&
-                event.mouseButton.button == Mouse::Left)
+            // Обработка движения мыши для интерфейса
+            if (event.type == sf::Event::MouseMoved)
             {
-                // Обновляем позицию коллектора и проверяем коллизии
-                collector->UpdatePosition(window);
+                sf::Vector2i mousePos(event.mouseMove.x, event.mouseMove.y);
+                plantingInterface.HandleMouseMove(mousePos);
+            }
 
-                // Проверяем все объекты на коллизию с коллектором
+            // Обработка кликов мыши
+            if (event.type == sf::Event::MouseButtonPressed &&
+                event.mouseButton.button == sf::Mouse::Left)
+            {
+                sf::Vector2i mousePos(event.mouseButton.x, event.mouseButton.y);
+
+                // Сначала проверяем клик по солнышкам
+                bool sun_clicked = false;
                 for (auto* obj : manager->GetObjects())
                 {
                     if (obj && obj->isAlive && obj->GetType() == CollisionObject::Sun)
                     {
                         if (obj->GetHitBox().contains(
-                            window.mapPixelToCoords(
-                                Vector2i(event.mouseButton.x, event.mouseButton.y))))
+                            window.mapPixelToCoords(mousePos)))
                         {
-                            // Собираем солнышко
                             Sun* sun = dynamic_cast<Sun*>(obj);
                             if (sun)
                             {
                                 sunManager.AddSun(sun->GetValue());
                                 manager->SendDeathMsg(sun);
+                                sun_clicked = true;
+                                break;
                             }
                         }
                     }
                 }
+
+                // Если не кликнули по солнышку, передаем обработку интерфейсу посадки
+                if (!sun_clicked)
+                {
+                    plantingInterface.HandleMouseClick(mousePos, window);
+                }
             }
         }
 
+        // Обновление
         level.Update(dt);
         sunManager.Update(dt);
+        plantingInterface.Update(dt, window);
         manager->UpdateObjects(dt);
 
+        // Отрисовка
         window.clear({ 255, 255, 255, 255 });
         field.Draw(window);
         manager->DrawObjects(window);
         sunManager.Draw(window);
+        plantingInterface.Draw(window);
         window.display();
     }
 
