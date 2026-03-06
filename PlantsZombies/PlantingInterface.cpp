@@ -7,10 +7,8 @@ PlantingInterface::PlantingInterface(GameField* field, SunManager* sunManager, L
 {
     interface_position = { 10, 100 }; 
 
-    // Загружаем шрифт
     font.loadFromFile("fonts/arial.ttf");
 
-    // Настройка подсветки ячейки
     highlight_cell.setSize(field->get_cell_size());
     highlight_cell.setFillColor(sf::Color(255, 255, 0, 100));
     highlight_cell.setOutlineThickness(2);
@@ -21,16 +19,14 @@ PlantingInterface::PlantingInterface(GameField* field, SunManager* sunManager, L
 
 void PlantingInterface::Initialize()
 {
-    // Создаем карточки растений
     cards.push_back(std::make_unique<PlantCard>(
-        PlantType::Peashooter, 100, 5.0f,
+        PlantType::Peashooter, 100, 5,
         "textures/plants/Peashoter_icon.png", font));
 
     cards.push_back(std::make_unique<PlantCard>(
-        PlantType::Sunflower, 50, 5.0f,
+        PlantType::Sunflower, 50, 5,
         "textures/plants/Sunflower_icon.png", font));
 
-    // Позиционируем карточки
     float x = interface_position.x;
     float y = interface_position.y;
 
@@ -42,19 +38,16 @@ void PlantingInterface::Initialize()
 
 void PlantingInterface::Update(float dt, const sf::RenderWindow& window)
 {
-    // Обновляем карточки
     for (auto& card : cards)
     {
         card->Update(dt, sunManager);
     }
 
-    // Если в режиме посадки, обновляем подсветку ячейки под мышью
     if (is_planting_mode)
     {
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
         sf::Vector2f worldPos = window.mapPixelToCoords(mousePos);
 
-        // Определяем ряд и колонку по позиции мыши
         if (worldPos.x >= field->get_field_origin().x &&
             worldPos.x <= field->get_field_origin().x + field->get_field_size().x &&
             worldPos.y >= field->get_field_origin().y &&
@@ -80,11 +73,10 @@ void PlantingInterface::Draw(sf::RenderWindow& window)
 {
     if (cards.empty()) return;
 
-    // Рассчитываем размеры для вертикального фона
-    float card_width = 80.0f;      // Ширина карточки
-    float card_height = 100.0f;    // Высота карточки
-    float spacing = 10.0f;         // Отступ между карточками
-    float padding = 10.0f;
+    float card_width = 80;
+    float card_height = 100;
+    float spacing = 10;
+    float padding = 10;
     float bg_height = cards.size() * card_height +
         (cards.size() - 1) * spacing +padding * 2;
 
@@ -97,13 +89,11 @@ void PlantingInterface::Draw(sf::RenderWindow& window)
     interface_bg.setOutlineColor(sf::Color::White);
     window.draw(interface_bg);
 
-    // Рисуем карточки
     for (auto& card : cards)
     {
         card->Draw(window);
     }
 
-    // Если в режиме посадки, подсвечиваем ячейку
     if (is_planting_mode && hover_row >= 0 && hover_col >= 0)
     {
         if (field->IsCellFree(hover_row, hover_col))
@@ -122,7 +112,6 @@ void PlantingInterface::Draw(sf::RenderWindow& window)
 
 void PlantingInterface::HandleMouseMove(const sf::Vector2i& mousePos)
 {
-    // Проверяем наведение на карточки
     for (auto& card : cards)
     {
         bool hover = card->Contains(mousePos);
@@ -132,7 +121,6 @@ void PlantingInterface::HandleMouseMove(const sf::Vector2i& mousePos)
 
 void PlantingInterface::HandleMouseClick(const sf::Vector2i& mousePos, sf::RenderWindow& window)
 {
-    // Сначала проверяем клик по карточкам
     for (size_t i = 0; i < cards.size(); ++i)
     {
         if (cards[i]->Contains(mousePos))
@@ -146,7 +134,6 @@ void PlantingInterface::HandleMouseClick(const sf::Vector2i& mousePos, sf::Rende
         }
     }
 
-    // Если в режиме посадки и клик по полю
     if (is_planting_mode)
     {
         sf::Vector2f worldPos = window.mapPixelToCoords(mousePos);
@@ -163,7 +150,6 @@ void PlantingInterface::HandleMouseClick(const sf::Vector2i& mousePos, sf::Rende
         }
         else
         {
-            // Клик вне поля - выходим из режима посадки
             ExitPlantingMode();
         }
     }

@@ -2,9 +2,13 @@
 #include "Manager.h"
 ZombieBucket::ZombieBucket(int row, sf::Vector2f position, GameField* field):
 	Zombie(row, position, "textures\\zombies\\ZombieBucket.png", 100, 8, 20, {0, 0, 130, 227}, {80, 130}, 2, field),
-	bucket_hp(100)
+	bucket_hp(100), is_tex_changed(false)
 {
 	CheckTex("textures\\zombies\\ZombieBucket.png");
+    if (!damaged_tex.loadFromFile("textures\\zombies\\RushZombie.png"))
+    {
+        std::cout << "ошибка" << std::endl;
+    }
 }
 
 void ZombieBucket::SendMessage(Message* m)
@@ -22,6 +26,17 @@ void ZombieBucket::TakeDmg(float dmg_amount)
     if (bucket_hp > 0)
     {
         bucket_hp -= dmg_amount;
+
+        if (bucket_hp <= max_bucket_hp / 2.0 && !is_tex_changed)
+        {
+            sprite.setTexture(damaged_tex);
+
+            sf::FloatRect bounds = sprite.getLocalBounds();
+            sprite.setOrigin(bounds.width / 2.0, bounds.height / 2.0);
+
+            is_tex_changed = true;
+        }
+
         if (bucket_hp <= 0)
         {
             bucket_hp = 0;
@@ -33,16 +48,12 @@ void ZombieBucket::TakeDmg(float dmg_amount)
 
             manager->SendCreateMsg(normalZombie);
             manager->SendDeathMsg(this);
-
             return;
         }
-        if (bucket_hp <= max_bucket_hp / 2.0f)
-        {
-
-        }
     }
-    else 
+    else
         hp -= dmg_amount;
+
     IsDeath();
 }
 
