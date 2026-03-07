@@ -20,8 +20,15 @@ LevelManager::LevelManager(GameField* field, Manager* manager):
 	int col1 = 0;
 	sf::Vector2f plantPos = GetPlantPosition(row1, col1);
 	Plant* p1 = new Peashooter(row1,col1, plantPos, field);
-
 	manager->SendCreateMsg(p1);
+
+	int row2 = 2;
+	int col2 = 1;
+	sf::Vector2f plantPos_ = GetPlantPosition(row2, col2);
+	Plant* p2 = new Peashooter(row2, col2, plantPos_, field);
+	manager->SendCreateMsg(p2);
+
+	
 }
 
 void LevelManager::Update(float dt)
@@ -36,7 +43,7 @@ void LevelManager::Update(float dt)
 	sf::Vector2f spawnPos = GetZombieSpawnPosition(row);
 
 	Zombie* z1 = new Zombie(row, spawnPos, "textures\\zombies\\DefaultZombie.png",
-		100, 4, 20, {0, 0, 128, 205}, {80, 120}, 1, field);
+		100, 4, 20, {0, 0, 274, 512}, {63, 120}, 1, field);
 
 	manager->SendCreateMsg(z1);
 
