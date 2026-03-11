@@ -14,7 +14,6 @@ class PlantCard {
 private:
     sf::RectangleShape background;
     sf::Sprite icon;
-    sf::Text cost_text;
     sf::Text cooldown_text;
 
     PlantType type;

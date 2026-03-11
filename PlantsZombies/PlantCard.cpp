@@ -5,7 +5,7 @@ PlantCard::PlantCard(PlantType type, int cost, float cooldown,
     : type(type), cost(cost), cooldown_time(cooldown)
 {
     // Настройка фона
-    background.setSize(sf::Vector2f(80, 100));
+    background.setSize(sf::Vector2f(80, 80));
     background.setFillColor(normal_color);
     background.setOutlineThickness(2);
     background.setOutlineColor(sf::Color::Black);
@@ -17,22 +17,10 @@ PlantCard::PlantCard(PlantType type, int cost, float cooldown,
 
     // Масштабируем иконку
     sf::FloatRect bounds = icon.getLocalBounds();
-    float scale = 60.0f / std::max(bounds.width, bounds.height);
-    icon.setScale(scale, scale);
+    float scale_x = 70.0f / bounds.width;   // Почти на всю ширину карточки
+    float scale_y = 70.0f / bounds.height;  // Почти на всю высоту
+    icon.setScale(scale_x, scale_y);
     icon.setOrigin(bounds.width / 2, bounds.height / 2);
-
-    // Настройка текста стоимости
-    cost_text.setFont(font);
-    cost_text.setString(std::to_string(cost));
-    cost_text.setCharacterSize(16);
-    cost_text.setFillColor(sf::Color::Yellow);
-    cost_text.setOutlineColor(sf::Color::Black);
-    cost_text.setOutlineThickness(1);
-
-    // Настройка текста перезарядки
-    cooldown_text.setFont(font);
-    cooldown_text.setCharacterSize(14);
-    cooldown_text.setFillColor(sf::Color::White);
 }
 
 void PlantCard::SetPosition(float x, float y)
@@ -45,11 +33,6 @@ void PlantCard::SetPosition(float x, float y)
     sf::FloatRect iconBounds = icon.getLocalBounds();
     icon.setPosition(x + bgBounds.width / 2, y + 40);
 
-    // Позиционируем текст стоимости
-    cost_text.setPosition(x + 10, y + 75);
-
-    // Текст перезарядки будет по центру
-    cooldown_text.setPosition(x + 40, y + 50);
 }
 
 void PlantCard::Update(float dt, SunManager* sunManager)
@@ -75,9 +58,7 @@ void PlantCard::Draw(sf::RenderWindow& window)
 {
     window.draw(background);
     window.draw(icon);
-    window.draw(cost_text);
 
-    // Если на перезарядке, показываем таймер
     if (current_cooldown > 0)
     {
         cooldown_text.setString(std::to_string((int)current_cooldown + 1));

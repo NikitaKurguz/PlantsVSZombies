@@ -75,7 +75,7 @@ void PlantingInterface::Draw(sf::RenderWindow& window)
 
     float card_width = 80;
     float card_height = 100;
-    float spacing = 10;
+    float spacing = 130;
     float padding = 10;
     float bg_height = cards.size() * card_height +
         (cards.size() - 1) * spacing +padding * 2;
@@ -121,12 +121,13 @@ void PlantingInterface::HandleMouseMove(const sf::Vector2i& mousePos)
 
 void PlantingInterface::HandleMouseClick(const sf::Vector2i& mousePos, sf::RenderWindow& window)
 {
+    // Сначала проверяем клик по карточкам
     for (size_t i = 0; i < cards.size(); ++i)
     {
         if (cards[i]->Contains(mousePos))
         {
-            cards[i]->OnClick(sunManager);
-            if (cards[i]->IsAvailable())
+            // Просто входим в режим посадки, если карточка доступна
+            if (cards[i]->IsAvailable() && sunManager->GetSunCount() >= cards[i]->GetCost())
             {
                 EnterPlantingMode(cards[i]->GetType());
             }
@@ -134,6 +135,7 @@ void PlantingInterface::HandleMouseClick(const sf::Vector2i& mousePos, sf::Rende
         }
     }
 
+    // Если в режиме посадки и клик по полю
     if (is_planting_mode)
     {
         sf::Vector2f worldPos = window.mapPixelToCoords(mousePos);
@@ -173,24 +175,41 @@ bool PlantingInterface::TryPlacePlant(int row, int col)
     if (!field->IsCellFree(row, col))
         return false;
 
-    Plant* new_plant = nullptr;
-    sf::Vector2f plantPos = levelManager->GetPlantPosition(row, col);
-
-    switch (selected_plant)
+    // Находим карточку выбранного растения
+    for (auto& card : cards)
     {
-    case PlantType::Peashooter:
-        new_plant = new Peashooter(row, col, plantPos, field);
-        break;
-    case PlantType::Sunflower:
-        new_plant = new Sunflower(row, col, plantPos, field);
-        break;
-    }
+        if (card->GetType() == selected_plant)
+        {
+            // Проверяем, хватает ли солнышек и доступна ли карточка
+            if (card->IsAvailable() && sunManager->GetSunCount() >= card->GetCost())
+            {
+                Plant* new_plant = nullptr;
+                sf::Vector2f plantPos = levelManager->GetPlantPosition(row, col);
 
-    if (new_plant)
-    {
-        Manager::GetExemplar()->SendCreateMsg(new_plant);
-        ExitPlantingMode();
-        return true;
+                switch (selected_plant)
+                {
+                case PlantType::Peashooter:
+                    new_plant = new Peashooter(row, col, plantPos, field);
+                    break;
+                case PlantType::Sunflower:
+                    new_plant = new Sunflower(row, col, plantPos, field);
+                    break;
+                }
+
+                if (new_plant)
+                {
+                    // ТРАТИМ СОЛНЫШКИ!
+                    sunManager->SpendSun(card->GetCost());
+
+                    // Создаем растение
+                    Manager::GetExemplar()->SendCreateMsg(new_plant);
+
+                    ExitPlantingMode();
+                    return true;
+                }
+            }
+            break;
+        }
     }
 
     return false;

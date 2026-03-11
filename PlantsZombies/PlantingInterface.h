@@ -26,7 +26,7 @@ private:
     sf::Vector2f interface_position;
     const float CARD_WIDTH = 80;
     const float CARD_HEIGHT = 100;
-    const float CARD_SPACING = 10;
+    const float CARD_SPACING = -20;
 
 public:
     PlantingInterface(GameField* field, SunManager* sunManager, LevelManager* levelManager);
