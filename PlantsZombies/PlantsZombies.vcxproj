@@ -139,12 +139,14 @@
     <ClCompile Include="Plant.cpp" />
     <ClCompile Include="PlantCard.cpp" />
     <ClCompile Include="PlantingInterface.cpp" />
+    <ClCompile Include="PotatoMine.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Sun.cpp" />
     <ClCompile Include="Sunflower.cpp" />
     <ClCompile Include="SunManager.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="Wallnut.cpp" />
     <ClCompile Include="Zombie.cpp" />
     <ClCompile Include="ZombieBucket.cpp" />
   </ItemGroup>
@@ -161,11 +163,13 @@
     <ClInclude Include="Plant.h" />
     <ClInclude Include="PlantCard.h" />
     <ClInclude Include="PlantingInterface.h" />
+    <ClInclude Include="PotatoMine.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Sun.h" />
     <ClInclude Include="Sunflower.h" />
     <ClInclude Include="SunManager.h" />
     <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="Wallnut.h" />
     <ClInclude Include="Zombie.h" />
     <ClInclude Include="ZombieBucket.h" />
   </ItemGroup>

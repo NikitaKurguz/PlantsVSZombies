@@ -1,6 +1,9 @@
 #include "PlantingInterface.h"
 #include "Peashooter.h"
 #include "Sunflower.h"
+#include "Wallnut.h"
+#include "PotatoMine.h"  
+
 
 PlantingInterface::PlantingInterface(GameField* field, SunManager* sunManager, LevelManager* levelManager)
     : field(field), sunManager(sunManager), levelManager(levelManager)
@@ -26,6 +29,12 @@ void PlantingInterface::Initialize()
     cards.push_back(std::make_unique<PlantCard>(
         PlantType::Sunflower, 50, 5,
         "textures/plants/Sunflower_icon.png", font));
+    cards.push_back(std::make_unique<PlantCard>(
+        PlantType::Wallnut, 50, 10, 
+        "textures/plants/Wallnut_icon.jpg", font));
+    cards.push_back(std::make_unique<PlantCard>(
+        PlantType::PotatoMine, 25, 15,  // cost=25, перезар€дка 15 секунд
+        "textures/plants/PotatoMine_icon.jpg", font));
 
     float x = interface_position.x;
     float y = interface_position.y;
@@ -193,6 +202,12 @@ bool PlantingInterface::TryPlacePlant(int row, int col)
                     break;
                 case PlantType::Sunflower:
                     new_plant = new Sunflower(row, col, plantPos, field);
+                    break;
+                case PlantType::Wallnut:  
+                    new_plant = new Wallnut(row, col, plantPos, field);
+                    break;
+                case PlantType::PotatoMine:  // <-- ƒобавл€ем картошку
+                    new_plant = new PotatoMine(row, col, plantPos, field);
                     break;
                 }
 

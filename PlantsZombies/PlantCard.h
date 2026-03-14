@@ -7,6 +7,8 @@
 enum class PlantType {
     Peashooter,
     Sunflower,
+    Wallnut,
+    PotatoMine
     // Другие растения
 };
 
