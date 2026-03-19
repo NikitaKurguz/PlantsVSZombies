@@ -3,6 +3,7 @@
 #include "Sunflower.h"
 #include "Wallnut.h"
 #include "PotatoMine.h"  
+#include "Cabbage.h"  
 
 
 PlantingInterface::PlantingInterface(GameField* field, SunManager* sunManager, LevelManager* levelManager)
@@ -35,6 +36,10 @@ void PlantingInterface::Initialize()
     cards.push_back(std::make_unique<PlantCard>(
         PlantType::PotatoMine, 25, 15,  // cost=25, перезарядка 15 секунд
         "textures/plants/PotatoMine_icon.jpg", font));
+    // Добавляем капусту
+    cards.push_back(std::make_unique<PlantCard>(
+        PlantType::Cabbage, 100, 5,  // cost=100, перезарядка 5 сек
+        "textures/plants/Cabbage_icon.jpg", font));
 
     float x = interface_position.x;
     float y = interface_position.y;
@@ -208,6 +213,9 @@ bool PlantingInterface::TryPlacePlant(int row, int col)
                     break;
                 case PlantType::PotatoMine:  // <-- Добавляем картошку
                     new_plant = new PotatoMine(row, col, plantPos, field);
+                    break;
+                case PlantType::Cabbage:  // <-- Добавить
+                    new_plant = new Cabbage(row, col, plantPos, field);
                     break;
                 }
 

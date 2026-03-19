@@ -127,6 +127,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Cabbage.cpp" />
+    <ClCompile Include="CabbageProjectile.cpp" />
     <ClCompile Include="Collector.cpp" />
     <ClCompile Include="GameField.cpp" />
     <ClCompile Include="LawnMower.cpp" />
@@ -151,6 +153,8 @@
     <ClCompile Include="ZombieBucket.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cabbage.h" />
+    <ClInclude Include="CabbageProjectile.h" />
     <ClInclude Include="Collector.h" />
     <ClInclude Include="GameField.h" />
     <ClInclude Include="LawnMower.h" />

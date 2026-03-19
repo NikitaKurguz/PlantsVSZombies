@@ -30,8 +30,6 @@ void PotatoMine::Update(float dt)
 void PotatoMine::SendMessage(Message* m)
 {
     Plant::SendMessage(m);
-
-    // Если взведены и столкнулись с зомби - взрываемся
     if (m->type == MessageType::Collision && is_armed)
     {
         if (m->collision.obj1 == this || m->collision.obj2 == this)
@@ -47,7 +45,6 @@ void PotatoMine::SendMessage(Message* m)
 
 void PotatoMine::Explode()
 {
-    // Находим всех зомби в радиусе и наносим урон
     Manager* mgr = Manager::GetExemplar();
     const auto& objects = mgr->GetObjects();
 
@@ -57,12 +54,13 @@ void PotatoMine::Explode()
         if (obj->GetType() != CollisionObject::Zombie) continue;
         if (obj->Get_row() != row) continue;  // Только в том же ряду
 
-        // Проверяем расстояние
         float dx = abs(obj->GetPosition().x - position.x);
         if (dx <= blast_radius)
         {
             mgr->SendAttackMsg(this, obj, damage);
         }
     }
+    if (field)
+        field->ClearCell(row, col);
     mgr->SendDeathMsg(this);
 }
