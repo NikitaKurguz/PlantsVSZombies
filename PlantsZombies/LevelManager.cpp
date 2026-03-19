@@ -16,19 +16,6 @@ LevelManager::LevelManager(GameField* field, Manager* manager):
 		msg->create.new_object = mower;
 		manager->SendMessage(msg);
 	}
-	int row1 = 3;
-	int col1 = 0;
-	sf::Vector2f plantPos = GetPlantPosition(row1, col1);
-	Plant* p1 = new Peashooter(row1,col1, plantPos, field);
-	manager->SendCreateMsg(p1);
-
-	int row2 = 2;
-	int col2 = 1;
-	sf::Vector2f plantPos_ = GetPlantPosition(row2, col2);
-	Plant* p2 = new Peashooter(row2, col2, plantPos_, field);
-	manager->SendCreateMsg(p2);
-
-	
 }
 
 void LevelManager::Update(float dt)

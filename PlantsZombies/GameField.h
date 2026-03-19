@@ -33,5 +33,14 @@ public:
 
 	int get_rows() const { return rows; }
 	int get_cols() const { return cols; }
+
+	void SetPlant(int row, int col, Object* plant) {
+		if (row >= 0 && row < rows && col >= 0 && col < cols)
+			grid[row][col].plant = plant;
+	}
+	void ClearCell(int row, int col) {
+		if (row >= 0 && row < rows && col >= 0 && col < cols)
+			grid[row][col].plant = nullptr;
+	}
 };
 

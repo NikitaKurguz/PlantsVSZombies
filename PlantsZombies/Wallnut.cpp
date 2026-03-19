@@ -20,6 +20,6 @@ void Wallnut::Update(float dt)
 
 void Wallnut::SendMessage(Message* m)
 {
-    Plant::SendMessage(m);  // Обрабатываем урон и смерть
+    Plant::SendMessage(m);  
 }
 

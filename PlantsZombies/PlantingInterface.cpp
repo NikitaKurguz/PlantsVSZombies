@@ -216,6 +216,8 @@ bool PlantingInterface::TryPlacePlant(int row, int col)
                     // ÒĞÀÒÈÌ ÑÎËÍÛØÊÈ!
                     sunManager->SpendSun(card->GetCost());
 
+                    field->SetPlant(row, col, new_plant);
+
                     // Ñîçäàåì ğàñòåíèå
                     Manager::GetExemplar()->SendCreateMsg(new_plant);
 

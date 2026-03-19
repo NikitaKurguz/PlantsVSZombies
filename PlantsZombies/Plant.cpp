@@ -40,6 +40,7 @@ void Plant::IsDeath()
 {
     if (hp <= 0 && isAlive) {
         isAlive = false;
+        if (field) field->ClearCell(row, col);
         Manager* manager = Manager::GetExemplar();
         manager->SendDeathMsg(this);
     }
