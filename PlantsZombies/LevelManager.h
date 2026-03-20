@@ -2,6 +2,7 @@
 #include "GameField.h"
 #include "Zombie.h"
 #include "ZombieBucket.h"
+#include "ZombieRunner.h"
 #include "Manager.h"
 class Plant;
 class LevelManager

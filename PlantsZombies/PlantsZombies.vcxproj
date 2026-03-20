@@ -151,6 +151,7 @@
     <ClCompile Include="Wallnut.cpp" />
     <ClCompile Include="Zombie.cpp" />
     <ClCompile Include="ZombieBucket.cpp" />
+    <ClCompile Include="ZombieRunner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cabbage.h" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Wallnut.h" />
     <ClInclude Include="Zombie.h" />
     <ClInclude Include="ZombieBucket.h" />
+    <ClInclude Include="ZombieRunner.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

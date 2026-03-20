@@ -40,6 +40,11 @@ void LevelManager::Update(float dt)
 
 	manager->SendCreateMsg(z2);
 
+	int row_r = 1; 
+	sf::Vector2f spawnPos_r = GetZombieSpawnPosition(row_r);
+	ZombieRunner* z3 = new ZombieRunner(row_r, spawnPos_r, field);
+	manager->SendCreateMsg(z3);
+
 	zombies_spawned++;
 }
 
