@@ -1,7 +1,7 @@
 #include "ZombieBucket.h"
 #include "Manager.h"
 ZombieBucket::ZombieBucket(int row, sf::Vector2f position, GameField* field):
-	Zombie(row, position, "textures\\zombies\\ZombieBucket.png", 100, 5, 20, {0, 0, 367, 512}, {80, 130}, 2, field),
+	Zombie(row, position, "textures\\zombies\\ZombieBucket.png", 100, 3, 20, {0, 0, 367, 512}, {80, 130}, 2, field),
 	bucket_hp(100), is_tex_changed(false)
 {
 	CheckTex("textures\\zombies\\ZombieBucket.png");
@@ -40,10 +40,7 @@ void ZombieBucket::TakeDmg(float dmg_amount)
         {
             bucket_hp = 0;
             Manager* manager = Manager::GetExemplar();
-
-            Zombie* normalZombie = new Zombie(
-                row, position, "textures\\zombies\\DefaultZombie.png",
-                hp, 4, 20, { 0, 0, 274, 512 }, { 63, 120 }, 2, Get_field());
+            Zombie* normalZombie = new Zombie(row, position, Get_field());
 
             manager->SendCreateMsg(normalZombie);
             manager->SendDeathMsg(this);

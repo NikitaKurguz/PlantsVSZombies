@@ -9,10 +9,19 @@ Zombie::Zombie(int row, sf::Vector2f position, const std::string& file_name,
 	CheckTex(file_name);
 }
 
+Zombie::Zombie(int row, sf::Vector2f position, GameField* field) :
+	Object(position, "textures\\zombies\\DefaultZombie.png", { 0, 0, 274, 512 }, { 63, 120 }, field),
+	hp(100), velocity(3), damage(20), row(row), attack_speed(1)
+{
+	CheckTex("textures\\zombies\\DefaultZombie.png");
+}
+
+
 Zombie::~Zombie()
 {
 
 }
+
 
 bool Zombie::IsCollision(Object* other) const
 {
