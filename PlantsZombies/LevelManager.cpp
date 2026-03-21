@@ -42,7 +42,14 @@ void LevelManager::Update(float dt)
 	int row_r = 1; 
 	sf::Vector2f spawnPos_r = GetZombieSpawnPosition(row_r);
 	ZombieRunner* z3 = new ZombieRunner(row_r, spawnPos_r, field);
+
 	manager->SendCreateMsg(z3);
+
+	int row_d = 1;
+	sf::Vector2f spawnPos_d = GetZombieSpawnPosition(row_d);
+	ZombieDancer* z4 = new ZombieDancer(row_d, spawnPos_d, field);
+
+	manager->SendCreateMsg(z4);
 
 	zombies_spawned++;
 }

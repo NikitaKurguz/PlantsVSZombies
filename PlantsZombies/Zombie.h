@@ -34,5 +34,6 @@ public:
 	
 	virtual void SendMessage(Message* m);
 	virtual void Update(float t) override;
+	sf::Vector2f GetZombieSpawnPosition(int row) const;
 };
 

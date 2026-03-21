@@ -150,5 +150,8 @@ void Zombie::Update(float t)
 		Manager::GetExemplar()->SendMessage(m);
 	}
 }
-
+sf::Vector2f Zombie::GetZombieSpawnPosition(int row) const
+{
+	return { 1100, field->GetCellCenter(row, 0).y + field->get_cell_size().y * 0.25f };
+}
 
