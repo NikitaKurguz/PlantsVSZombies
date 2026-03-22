@@ -9,11 +9,7 @@ protected:
     float max_distance;
     float traveled_distance;
     sf::Vector2f direction;
-
-private:
     void CheckFieldBounds();
-
-protected:
     virtual void OnHit(Object* other) = 0;
 
 public:

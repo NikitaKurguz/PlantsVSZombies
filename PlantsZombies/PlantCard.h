@@ -9,9 +9,8 @@ enum class PlantType {
     Sunflower,
     Wallnut,
     PotatoMine,
-    Cabbage
-
-    // Другие растения
+    Cabbage,
+    CherryBomb
 };
 
 class PlantCard {
