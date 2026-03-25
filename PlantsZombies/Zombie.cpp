@@ -125,6 +125,17 @@ void Zombie::SendMessage(Message* m)
 }
 void Zombie::Update(float t)
 {
+	float left_boundary = field->get_field_origin().x - 30;
+
+	if (position.x <= left_boundary)
+	{
+		Manager::GetExemplar()->SetGameOver();
+		return;
+	}
+
+	if (Manager::GetExemplar()->IsGameStopped())
+		return;
+
 	if (isAttacking)
 	{
 		Object* target = GetTarget();

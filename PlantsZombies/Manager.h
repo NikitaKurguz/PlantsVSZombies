@@ -11,6 +11,8 @@ private:
 	std::vector<Message*> messages;
 
 	std::vector<Object*> remove_objs;
+	bool game_over = false;
+	bool game_stopped = false;
 
 	Manager();
 	~Manager();
@@ -29,5 +31,9 @@ public:
 	void UpdateObjects(float t);
 	void DrawObjects(sf::RenderWindow& window);
 	void SendMessage(Message* m);
+	void SetGameOver() { game_over = true; game_stopped = true; }
+	bool IsGameOver() const { return game_over; }
+	bool IsGameStopped() const { return game_stopped; }
+	void StopGame() { game_stopped = true; }
 };
 

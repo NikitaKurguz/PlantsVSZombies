@@ -131,7 +131,9 @@
     <ClCompile Include="CabbageProjectile.cpp" />
     <ClCompile Include="CherryBomb.cpp" />
     <ClCompile Include="Collector.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameField.cpp" />
+    <ClCompile Include="GameOverWin.cpp" />
     <ClCompile Include="LawnMower.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="Manager.cpp" />
@@ -160,7 +162,9 @@
     <ClInclude Include="CabbageProjectile.h" />
     <ClInclude Include="CherryBomb.h" />
     <ClInclude Include="Collector.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="GameField.h" />
+    <ClInclude Include="GameOverWin.h" />
     <ClInclude Include="LawnMower.h" />
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="Manager.h" />

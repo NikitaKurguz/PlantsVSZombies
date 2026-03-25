@@ -86,8 +86,12 @@ Object* Manager::FindObjectByID(int id)
 
 void Manager::UpdateObjects(float t)
 {
+	if (game_stopped)
+		return;
+
 	for (auto& obj : objects) 
 		obj->Update(t);
+
 	CheckCollisions();
 	while(!(messages.empty()))
 	{
