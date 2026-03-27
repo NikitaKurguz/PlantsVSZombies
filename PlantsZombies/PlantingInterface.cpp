@@ -25,21 +25,19 @@ PlantingInterface::PlantingInterface(GameField* field, SunManager* sunManager, L
 void PlantingInterface::Initialize()
 {
     cards.push_back(std::make_unique<PlantCard>(
-        PlantType::Peashooter, 100, 5,
+        PlantType::Peashooter, 100, 10,
         "textures/plants/Peashoter_icon.png", font));
-
     cards.push_back(std::make_unique<PlantCard>(
-        PlantType::Sunflower, 50, 5,
+        PlantType::Sunflower, 50,10,
         "textures/plants/Sunflower_icon.png", font));
     cards.push_back(std::make_unique<PlantCard>(
         PlantType::Wallnut, 50, 10, 
         "textures/plants/Wallnut_icon.jpg", font));
     cards.push_back(std::make_unique<PlantCard>(
-        PlantType::PotatoMine, 25, 15,  // cost=25, перезарядка 15 секунд
+        PlantType::PotatoMine, 25, 15,  
         "textures/plants/PotatoMine_icon.jpg", font));
-    // Добавляем капусту
     cards.push_back(std::make_unique<PlantCard>(
-        PlantType::Cabbage, 100, 5,  // cost=100, перезарядка 5 сек
+        PlantType::Cabbage, 100, 5, 
         "textures/plants/Cabbage_icon.jpg", font));
     cards.push_back(std::make_unique<PlantCard>(
         PlantType::CherryBomb, 150, 30,  // cost=150, перезарядка 30 секунд
@@ -230,6 +228,8 @@ bool PlantingInterface::TryPlacePlant(int row, int col)
                 {
                     // ТРАТИМ СОЛНЫШКИ!
                     sunManager->SpendSun(card->GetCost());
+
+                    card->StartCooldown();
 
                     field->SetPlant(row, col, new_plant);
 

@@ -42,6 +42,8 @@ sf::Vector2f GameField::GetCellCenter(int row, int col) const
 
 bool GameField::IsCellFree(int row, int col) const
 {
+    if (row < 0 || row >= rows || col < 0 || col >= cols)
+        return false;
     return grid[row][col].plant == nullptr;
 }
 
