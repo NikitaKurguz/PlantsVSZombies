@@ -10,14 +10,12 @@ private:
     float natural_spawn_delay = 10.0f;
     GameField* field;
 
-    // Добавьте эти поля для отображения
     sf::Font font;
     sf::Text sun_text;
     bool font_loaded;
 
 public:
     SunManager(GameField* field);
-    ~SunManager();
 
     void Update(float dt);
     void Draw(sf::RenderWindow& window);

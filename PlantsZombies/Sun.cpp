@@ -31,11 +31,6 @@ void Sun::Update(float dt)
     {
         Manager::GetExemplar()->SendDeathMsg(this);
     }
-    if (lifetime - life_timer < 2.0f)
-    {
-        float alpha = 255 * (1.0f - (life_timer - (lifetime - 2.0f)) / 2.0f);
-        sprite.setColor(sf::Color(255, 255, 255, static_cast<sf::Uint8>(alpha)));
-    }
 }
 
 void Sun::SendMessage(Message* m)

@@ -4,7 +4,7 @@
 class Sunflower : public Plant
 {
 private:
-    float production_cooldown = 10;  // Интервал производства солнышек
+    float production_cooldown = 10;  
     float production_timer = 0;
 
 public:

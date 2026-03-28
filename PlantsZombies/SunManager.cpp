@@ -1,7 +1,6 @@
 #include "SunManager.h"
 #include "Manager.h"
 #include "Sun.h"
-#include <iostream>
 
 SunManager::SunManager(GameField* field) : field(field), font_loaded(false)
 {
@@ -15,10 +14,6 @@ SunManager::SunManager(GameField* field) : field(field), font_loaded(false)
     }
 }
 
-SunManager::~SunManager()
-{
-}
-
 void SunManager::Update(float dt)
 {
     natural_spawn_timer += dt;
@@ -26,7 +21,7 @@ void SunManager::Update(float dt)
     {
         SpawnNaturalSun();
         natural_spawn_timer = 0;
-        natural_spawn_delay = 8.0f + (rand() % 5);
+        natural_spawn_delay = 25 + (rand() % 5);
     }
 }
 
