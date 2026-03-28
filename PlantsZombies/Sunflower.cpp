@@ -10,10 +10,6 @@ Sunflower::Sunflower(int row, int col, sf::Vector2f pos, GameField* field) :
     CheckTex("textures\\plants\\SF.png");
 }
 
-Sunflower::~Sunflower()
-{
-}
-
 void Sunflower::Update(float dt)
 {
     Plant::Update(dt);  
@@ -24,11 +20,6 @@ void Sunflower::Update(float dt)
         ProduceSun();
         production_timer = 0;
     }
-}
-
-void Sunflower::SendMessage(Message* m)
-{
-    Plant::SendMessage(m);
 }
 
 void Sunflower::ProduceSun()

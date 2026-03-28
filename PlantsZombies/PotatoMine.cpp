@@ -9,21 +9,15 @@ PotatoMine::PotatoMine(int row, int col, sf::Vector2f pos, GameField* field) :
     CheckTex("textures/plants/PotatoMine.png");
 }
 
-PotatoMine::~PotatoMine()
-{
-}
 
 void PotatoMine::Update(float dt)
 {
     Plant::Update(dt);
 
-    if (!is_armed)
+    timer += dt;
+    if (timer >= activation_time)
     {
-        timer += dt;
-        if (timer >= activation_time)
-        {
-            is_armed = true;
-        }
+        is_armed = true;
     }
 }
 
@@ -46,21 +40,21 @@ void PotatoMine::SendMessage(Message* m)
 void PotatoMine::Explode()
 {
     Manager* mgr = Manager::GetExemplar();
-    const auto& objects = mgr->GetObjects();
 
-    for (Object* obj : objects)
+    for (Object* obj : mgr->GetObjects())
     {
         if (!obj || !obj->isAlive) continue;
         if (obj->GetType() != CollisionObject::Zombie) continue;
-        if (obj->Get_row() != row) continue;  // Только в том же ряду
+        if (obj->Get_row() != row) continue;  
 
-        float dx = abs(obj->GetPosition().x - position.x);
+        float dx = obj->GetPosition().x - position.x;
+        if (dx < 0) dx = -dx;
         if (dx <= blast_radius)
         {
             mgr->SendAttackMsg(this, obj, damage);
         }
     }
-    if (field)
-        field->ClearCell(row, col);
+
+    field->ClearCell(row, col);
     mgr->SendDeathMsg(this);
 }

@@ -170,7 +170,7 @@
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="Object.h" />
-    <ClInclude Include="Pea.h" />
+    <ClInclude Include="PeaProjectile.h" />
     <ClInclude Include="Peashooter.h" />
     <ClInclude Include="Plant.h" />
     <ClInclude Include="PlantCard.h" />
