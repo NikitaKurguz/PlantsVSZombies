@@ -18,20 +18,6 @@ GameField::GameField():
 void GameField::Draw(sf::RenderWindow& window)
 {
     window.draw(background);
-
-
-    //sf::RectangleShape cell(cell_size);
-    //cell.setFillColor(sf::Color::Transparent);
-    //cell.setOutlineThickness(1.f);
-    //cell.setOutlineColor(sf::Color(255, 0, 0, 120));
-
-    //for (int r = 0; r < rows; ++r)
-    //    for (int c = 0; c < cols; ++c)
-    //    {
-    //        cell.setPosition(field_origin.x + c * cell_size.x,
-    //            field_origin.y + r * cell_size.y);
-    //        window.draw(cell);
-    //    }
 }
 
 sf::Vector2f GameField::GetCellCenter(int row, int col) const

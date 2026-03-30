@@ -27,13 +27,11 @@ void SunManager::Update(float dt)
 
 void SunManager::Draw(sf::RenderWindow& window)
 {
-    // Иконка солнышка
     sf::CircleShape sun_icon(15);
     sun_icon.setFillColor(sf::Color::Yellow);
     sun_icon.setPosition(10, 10);
     window.draw(sun_icon);
 
-    // Текст с количеством
     if (font_loaded)
     {
         sun_text.setString(std::to_string(sun_count));

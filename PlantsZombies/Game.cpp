@@ -224,7 +224,7 @@ void Game::Run()
 {
     while (window.isOpen() && isRunning)
     {
-        float dt = clock.restart().asSeconds() * 8;
+        float dt = clock.restart().asSeconds() * 7;
 
         HandleEvents();
         Update(dt);

@@ -28,7 +28,6 @@ private:
     sf::Vector2f position;
     bool is_hovered = false;
 
-    // Для анимации наведения
     sf::Color normal_color = sf::Color(100, 100, 100, 200);
     sf::Color hover_color = sf::Color(150, 150, 150, 220);
     sf::Color unavailable_color = sf::Color(80, 80, 80, 150);

@@ -1,10 +1,6 @@
 #include "Plant.h"
 #include "Manager.h"
 
-void Plant::Update_attck_timer(float t)
-{
-}
-
 Plant::Plant(int row, int col, sf::Vector2f position, const std::string& file_name,
     int cost, int range, float hp, float damage, float attack_cooldown, bool is_attack_type,
     const sf::IntRect& rect, sf::Vector2f physical_size, 
@@ -17,9 +13,7 @@ Plant::Plant(int row, int col, sf::Vector2f position, const std::string& file_na
     CheckTex(file_name);
 }
 
-Plant::~Plant()
-{
-}
+Plant::~Plant(){}
 
 void Plant::OnProjectileDestroyed()
 {

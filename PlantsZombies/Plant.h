@@ -12,7 +12,6 @@ protected:
     float damage;
     float attack_cooldown;
     float attack_timer;
-    bool is_attacking_type;
     bool is_attack_type;
 
     int targetID = -1;
@@ -20,8 +19,6 @@ protected:
     bool projectile_active = false;
     float color_timer = 0;
 
-
-    void Update_attck_timer(float t);
     bool IsAttackReady() const { return attack_timer >= attack_cooldown; }
 public:
     Plant(int row, int col, sf::Vector2f position, const std::string& file_name,
@@ -34,9 +31,6 @@ public:
     int Get_row() const override { return row; }
     float GetHP() const { return hp; }
     float GetDamage() const { return damage; }
-    int GetCost() const { return cost; }
-    void SetDamage(float newDamage) { damage = newDamage; }
-    bool isAttacking_t() const { return is_attack_type; }
 
     CollisionObject GetType() const override { return CollisionObject::Plant; }
     bool IsCollision(Object* other) const override;

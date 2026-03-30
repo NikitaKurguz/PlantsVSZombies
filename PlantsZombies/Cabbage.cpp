@@ -4,7 +4,7 @@
 
 Cabbage::Cabbage(int row, int col, sf::Vector2f pos, GameField* field) :
     Plant(row, col, pos, "textures/plants/CabbagePult.png",
-        100, 4000, 100, 20, 20.0f, true, 
+        100, 4000, 100, 20, 20, true, 
         { 0, 0, 1392, 1305 }, { 70, 80 }, field)
 {
     CheckTex("textures/plants/CabbagePult.png");

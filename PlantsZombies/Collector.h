@@ -1,7 +1,6 @@
 #pragma once
 #include "Object.h"
 
-// Невидимый объект для сбора солнышек по клику
 class Collector : public Object
 {
 public:

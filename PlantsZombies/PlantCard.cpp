@@ -78,7 +78,6 @@ void PlantCard::OnClick(SunManager* sunManager)
     if (IsAvailable() && sunManager && sunManager->SpendSun(cost))
     {
         StartCooldown();
-        // Сигнал о покупке будет обработан в интерфейсе
     }
 }
 
