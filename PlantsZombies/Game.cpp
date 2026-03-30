@@ -3,12 +3,12 @@
 #include "Sun.h"
 #include <iostream>
 
-Game::Game(): window(sf::VideoMode(1024, 600), "Plants vs Zombies")
+Game::Game()
+    : window(sf::VideoMode(1024, 600), "Plants vs Zombies")
 {
     manager = Manager::GetExemplar();
     InitializeGame();
 }
-
 Game::~Game()
 {
     Manager::GetExemplar()->KillIExemplar();
@@ -20,17 +20,27 @@ void Game::InitializeGame()
     sunManager = std::make_unique<SunManager>(&field);
     plantingInterface = std::make_unique<PlantingInterface>(&field, sunManager.get(), level.get());
     gameOverScreen = std::make_unique<GameOverWin>();
+    winScreen = std::make_unique<WinScreen>();
 
     if (!gameOverScreen->Initialize())
     {
         std::cerr << "Warning: GameOverScreen failed to initialize!" << std::endl;
     }
-    gameOverScreen->SetGameOverImage("textures/other/human.png");
+
+    if (!winScreen->Initialize())
+    {
+        std::cerr << "Warning: WinScreen failed to initialize!" << std::endl;
+    }
+
+    gameOverScreen->SetGameOverImage("textures/other/Human.png");
+    winScreen->SetWinImage("textures/other/Crow.png");
 
     Collector* collector = new Collector(&field);
     manager->SendCreateMsg(collector);
 
     gameOver = false;
+    gameWin = false;
+    manager->ResetGameFlags();
 }
 
 void Game::SetGameOverImage(const std::string& imagePath)
@@ -57,6 +67,38 @@ void Game::SetGameOverTextColor(const sf::Color& color)
     }
 }
 
+void Game::SetWinImage(const std::string& imagePath)
+{
+    if (winScreen)
+    {
+        winScreen->SetWinImage(imagePath);
+    }
+}
+
+void Game::SetWinOverlayOpacity(int opacity)
+{
+    if (winScreen)
+    {
+        winScreen->SetOverlayOpacity(opacity);
+    }
+}
+
+void Game::SetWinTextColor(const sf::Color& color)
+{
+    if (winScreen)
+    {
+        winScreen->SetTextColor(color);
+    }
+}
+
+void Game::SetWinInfoColor(const sf::Color& color)
+{
+    if (winScreen)
+    {
+        winScreen->SetInfoColor(color);
+    }
+}
+
 void Game::HandleEvents()
 {
     sf::Event event;
@@ -74,6 +116,12 @@ void Game::HandleEvents()
             continue;
         }
 
+        if (gameWin)
+        {
+            winScreen->HandleInput(event, window);
+            continue;
+        }
+
         if (event.type == sf::Event::MouseMoved)
         {
             sf::Vector2i mousePos(event.mouseMove.x, event.mouseMove.y);
@@ -86,7 +134,8 @@ void Game::HandleEvents()
             sf::Vector2i mousePos(event.mouseButton.x, event.mouseButton.y);
 
             bool sun_clicked = false;
-            for (auto* obj : manager->GetObjects())
+            std::vector<Object*> objectsCopy = manager->GetObjects();
+            for (auto* obj : objectsCopy)
             {
                 if (obj && obj->isAlive && obj->GetType() == CollisionObject::Sun)
                 {
@@ -114,17 +163,39 @@ void Game::HandleEvents()
 
 void Game::Update(float dt)
 {
-    if (gameOver) return;
+    if (gameOver || gameWin) return;
+
+    if (level->GetCurrentWave() >= level->GetTotalWaves())
+    {
+        bool zombiesAlive = false;
+        const std::vector<Object*>& objects = manager->GetObjects();
+        for (size_t i = 0; i < objects.size(); ++i)
+        {
+            Object* obj = objects[i];
+            if (obj && obj->isAlive && obj->GetType() == CollisionObject::Zombie)
+            {
+                zombiesAlive = true;
+                break;
+            }
+        }
+
+        if (!zombiesAlive && !gameWin)
+        {
+            SetGameWin();
+            return;
+        }
+    }
+
+    if (manager->IsGameOver())
+    {
+        SetGameOver();
+        return;
+    }
 
     level->Update(dt);
     sunManager->Update(dt);
     plantingInterface->Update(dt, window);
     manager->UpdateObjects(dt);
-
-    if (manager->IsGameOver())
-    {
-        SetGameOver();
-    }
 }
 
 void Game::Render()
@@ -139,6 +210,11 @@ void Game::Render()
     if (gameOver)
     {
         gameOverScreen->Draw(window);
+    }
+
+    if (gameWin)
+    {
+        winScreen->Draw(window);
     }
 
     window.display();
@@ -160,4 +236,14 @@ void Game::SetGameOver()
 {
     gameOver = true;
     manager->StopGame();
+}
+
+void Game::SetGameWin()
+{
+    gameWin = true;
+    manager->SetGameWin();
+    if (winScreen)
+    {
+        winScreen->SetWinMessage("");
+    }
 }

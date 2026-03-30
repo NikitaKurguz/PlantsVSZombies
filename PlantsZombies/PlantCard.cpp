@@ -4,21 +4,18 @@ PlantCard::PlantCard(PlantType type, int cost, float cooldown,
     const std::string& icon_path, const sf::Font& font)
     : type(type), cost(cost), cooldown_time(cooldown)
 {
-    // Настройка фона
     background.setSize(sf::Vector2f(80, 80));
     background.setFillColor(normal_color);
     background.setOutlineThickness(2);
     background.setOutlineColor(sf::Color::Black);
 
-    // Загрузка иконки
     auto* tm = TextureManager::GetTextureInstance();
     tm->LoadTextureFromFile(icon_path);
     icon.setTexture(*tm->GetTexturePointer(icon_path));
 
-    // Масштабируем иконку
     sf::FloatRect bounds = icon.getLocalBounds();
-    float scale_x = 70.0f / bounds.width;   // Почти на всю ширину карточки
-    float scale_y = 70.0f / bounds.height;  // Почти на всю высоту
+    float scale_x = 70.0f / bounds.width;
+    float scale_y = 70.0f / bounds.height;
     icon.setScale(scale_x, scale_y);
     icon.setOrigin(bounds.width / 2, bounds.height / 2);
 }
@@ -28,7 +25,6 @@ void PlantCard::SetPosition(float x, float y)
     position = { x, y };
     background.setPosition(x, y);
 
-    // Позиционируем иконку по центру верхней части карточки
     sf::FloatRect bgBounds = background.getLocalBounds();
     sf::FloatRect iconBounds = icon.getLocalBounds();
     icon.setPosition(x + bgBounds.width / 2, y + 40);
@@ -39,7 +35,6 @@ void PlantCard::Update(float dt, SunManager* sunManager)
 {
     UpdateCooldown(dt);
 
-    // Обновляем цвет в зависимости от доступности
     if (!IsAvailable() || (sunManager && sunManager->GetSunCount() < cost))
     {
         background.setFillColor(unavailable_color);

@@ -3,7 +3,7 @@
 
 PotatoMine::PotatoMine(int row, int col, sf::Vector2f pos, GameField* field) :
     Plant(row, col, pos, "textures/plants/PotatoMine.png",
-        25, 0, 100, 50, 0, false,  
+        25, 0, 100, 150, 0, false,  
         { 0, 0, 539, 482 }, { 60, 60 }, field)  
 {
     CheckTex("textures/plants/PotatoMine.png");

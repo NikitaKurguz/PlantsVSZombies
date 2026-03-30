@@ -21,44 +21,86 @@ LevelManager::LevelManager(GameField* field, Manager* manager) :
 
 void LevelManager::LoadWaves()
 {
+    waves.clear();
     Wave wave1;
     wave1.zombiesCount = 3;
-    wave1.spawnDelay = 3.0;
-    wave1.waveDelay = 3.0;
+    wave1.spawnDelay = 25;
+    wave1.waveDelay = 40;
     wave1.zombies = {
-        {3, "dancer"},
-        {2, "bucket"},
-        {4, "runner"}
+        {0, "default"},
+        {1, "default"},
+        {4, "default"}
     };
     waves.push_back(wave1);
 
     Wave wave2;
     wave2.zombiesCount = 5;
-    wave2.spawnDelay = 2.5f;
-    wave2.waveDelay = 3.0f;
+    wave2.spawnDelay = 20;
+    wave2.waveDelay = 30;
     wave2.zombies = {
-        {3, "default"},
-        {2, "bucket"},
+        {0, "default"},
+        {1, "bucket"},
         {1, "default"},
         {4, "default"},
-        {3, "runner"}
+        {2, "bucket"}
     };
     waves.push_back(wave2);
 
     Wave wave3;
     wave3.zombiesCount = 7;
-    wave3.spawnDelay = 2.0f;
-    wave3.waveDelay = 3.0f;
+    wave3.spawnDelay = 30;
+    wave3.waveDelay = 30;
     wave3.zombies = {
-        {3, "bucket"},
-        {2, "runner"},
-        {1, "default"},
-        {4, "bucket"},
+        {0, "bucket"},
+        {1, "runner"},
         {3, "default"},
-        {2, "dancer"},
-        {4, "runner"}
+        {4, "bucket"},
+        {0, "default"},
+        {2, "default"},
+        {3, "runner"}
     };
     waves.push_back(wave3);
+
+    Wave wave4;
+    wave4.zombiesCount = 10;
+    wave4.spawnDelay = 30;
+    wave4.waveDelay = 30;
+    wave4.zombies = {
+        {0, "default"},
+        {4, "bucket"},
+        {0, "runner"},
+        {3, "default"},
+        {1, "runner"},
+        {3, "bucket"},
+        {2, "dancer"},
+        {1, "default"},
+        {2, "runner"},
+        {4, "bucket"}
+    };
+    waves.push_back(wave4);
+
+    Wave wave5;
+    wave5.zombiesCount = 15;
+    wave5.spawnDelay = 30;
+    wave5.waveDelay = 30;
+    wave5.zombies = {
+        {3, "bucket"},
+        {2, "bucket"},
+        {3, "dancer"},
+        {0, "default"},
+        {1, "runner"},
+        {2, "default"},
+        {4, "runner"},
+        {3, "bucket"},
+        {0, "default"},
+        {1, "default"},
+        {2, "dancer" },
+        {3, "runner"},
+        {1, "default"},
+        {4, "bucket"},
+        {2, "bucket"}
+    };
+    waves.push_back(wave5);
 
     currentWave = 0;
     waveInProgress = true;
@@ -98,9 +140,14 @@ void LevelManager::SpawnZombie(int row, const std::string& zombieType)
 
 void LevelManager::Update(float dt)
 {
-    if (manager->IsGameStopped()) return;
+    if (manager->IsGameStopped() || manager->IsGameWin()) return;
 
     if (currentWave >= totalWaves)
+    {
+        return;
+    }
+
+    if (currentWave >= waves.size())
     {
         return;
     }
@@ -166,11 +213,13 @@ void LevelManager::Update(float dt)
                 waveInProgress = false;
                 currentWave++;
 
-                if (currentWave < totalWaves)
+                if (currentWave >= totalWaves || currentWave >= waves.size())
                 {
-                    waveDelayActive = true;
-                    waveTimer = 0;
+                    return;
                 }
+
+                waveDelayActive = true;
+                waveTimer = 0;
             }
         }
     }

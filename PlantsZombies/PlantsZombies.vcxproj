@@ -152,6 +152,7 @@
     <ClCompile Include="SunManager.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Wallnut.cpp" />
+    <ClCompile Include="WinScreen.cpp" />
     <ClCompile Include="Zombie.cpp" />
     <ClCompile Include="ZombieBucket.cpp" />
     <ClCompile Include="ZombieDancer.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="SunManager.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Wallnut.h" />
+    <ClInclude Include="WinScreen.h" />
     <ClInclude Include="Zombie.h" />
     <ClInclude Include="ZombieBucket.h" />
     <ClInclude Include="ZombieDancer.h" />

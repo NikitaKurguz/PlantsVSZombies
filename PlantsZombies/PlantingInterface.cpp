@@ -25,22 +25,22 @@ PlantingInterface::PlantingInterface(GameField* field, SunManager* sunManager, L
 void PlantingInterface::Initialize()
 {
     cards.push_back(std::make_unique<PlantCard>(
-        PlantType::Peashooter, 100, 10,
+        PlantType::Peashooter, 100, 30,
         "textures/plants/Peashoter_icon.png", font));
     cards.push_back(std::make_unique<PlantCard>(
-        PlantType::Sunflower, 50,10,
+        PlantType::Sunflower, 50, 30,
         "textures/plants/Sunflower_icon.png", font));
     cards.push_back(std::make_unique<PlantCard>(
-        PlantType::Wallnut, 50, 10, 
+        PlantType::Wallnut, 50, 30, 
         "textures/plants/Wallnut_icon.jpg", font));
     cards.push_back(std::make_unique<PlantCard>(
-        PlantType::PotatoMine, 25, 15,  
+        PlantType::PotatoMine, 25, 50,  
         "textures/plants/PotatoMine_icon.jpg", font));
     cards.push_back(std::make_unique<PlantCard>(
-        PlantType::Cabbage, 100, 5, 
+        PlantType::Cabbage, 100, 30, 
         "textures/plants/Cabbage_icon.jpg", font));
     cards.push_back(std::make_unique<PlantCard>(
-        PlantType::CherryBomb, 150, 30,  // cost=150, перезарядка 30 секунд
+        PlantType::CherryBomb, 150, 30,
         "textures/plants/CherryBomb_icon.jpg", font));
 
     float x = interface_position.x;
@@ -137,12 +137,10 @@ void PlantingInterface::HandleMouseMove(const sf::Vector2i& mousePos)
 
 void PlantingInterface::HandleMouseClick(const sf::Vector2i& mousePos, sf::RenderWindow& window)
 {
-    // Сначала проверяем клик по карточкам
     for (size_t i = 0; i < cards.size(); ++i)
     {
         if (cards[i]->Contains(mousePos))
         {
-            // Просто входим в режим посадки, если карточка доступна
             if (cards[i]->IsAvailable() && sunManager->GetSunCount() >= cards[i]->GetCost())
             {
                 EnterPlantingMode(cards[i]->GetType());
@@ -151,7 +149,6 @@ void PlantingInterface::HandleMouseClick(const sf::Vector2i& mousePos, sf::Rende
         }
     }
 
-    // Если в режиме посадки и клик по полю
     if (is_planting_mode)
     {
         sf::Vector2f worldPos = window.mapPixelToCoords(mousePos);
@@ -191,12 +188,10 @@ bool PlantingInterface::TryPlacePlant(int row, int col)
     if (!field->IsCellFree(row, col))
         return false;
 
-    // Находим карточку выбранного растения
     for (auto& card : cards)
     {
         if (card->GetType() == selected_plant)
         {
-            // Проверяем, хватает ли солнышек и доступна ли карточка
             if (card->IsAvailable() && sunManager->GetSunCount() >= card->GetCost())
             {
                 Plant* new_plant = nullptr;
@@ -213,10 +208,10 @@ bool PlantingInterface::TryPlacePlant(int row, int col)
                 case PlantType::Wallnut:  
                     new_plant = new Wallnut(row, col, plantPos, field);
                     break;
-                case PlantType::PotatoMine:  // <-- Добавляем картошку
+                case PlantType::PotatoMine:
                     new_plant = new PotatoMine(row, col, plantPos, field);
                     break;
-                case PlantType::Cabbage:  // <-- Добавить
+                case PlantType::Cabbage:
                     new_plant = new Cabbage(row, col, plantPos, field);
                     break;
                 case PlantType::CherryBomb:
@@ -226,14 +221,12 @@ bool PlantingInterface::TryPlacePlant(int row, int col)
 
                 if (new_plant)
                 {
-                    // ТРАТИМ СОЛНЫШКИ!
                     sunManager->SpendSun(card->GetCost());
 
                     card->StartCooldown();
 
                     field->SetPlant(row, col, new_plant);
 
-                    // Создаем растение
                     Manager::GetExemplar()->SendCreateMsg(new_plant);
 
                     ExitPlantingMode();

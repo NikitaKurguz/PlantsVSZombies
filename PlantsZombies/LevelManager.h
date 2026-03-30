@@ -15,16 +15,15 @@ private:
     GameField* field;
     Manager* manager;
 
-    // Система волн
     int currentWave = 0;
-    int totalWaves = 3; // Всего 3 волны
+    int totalWaves = 5;
 
     struct Wave
     {
-        int zombiesCount;           // Количество зомби в волне
-        float spawnDelay;           // Задержка между спавном зомби
-        float waveDelay;            // Задержка перед следующей волной
-        std::vector<std::pair<int, std::string>> zombies; // <ряд, тип зомби>
+        int zombiesCount;
+        float spawnDelay;
+        float waveDelay;
+        std::vector<std::pair<int, std::string>> zombies;
     };
 
     std::vector<Wave> waves;
@@ -49,4 +48,5 @@ public:
 
     int GetCurrentWave() const { return currentWave; }
     int GetTotalWaves() const { return totalWaves; }
+    bool IsAllWavesComplete() const { return currentWave >= totalWaves; }
 };

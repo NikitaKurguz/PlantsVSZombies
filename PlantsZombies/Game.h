@@ -7,6 +7,7 @@
 #include "SunManager.h"
 #include "PlantingInterface.h"
 #include "GameOverWin.h"
+#include "WinScreen.h"
 
 class Game
 {
@@ -20,9 +21,11 @@ private:
     std::unique_ptr<SunManager> sunManager;
     std::unique_ptr<PlantingInterface> plantingInterface;
     std::unique_ptr<GameOverWin> gameOverScreen;
+    std::unique_ptr<WinScreen> winScreen;
 
     bool isRunning = true;
     bool gameOver = false;
+    bool gameWin = false;
 
     void HandleEvents();
     void Update(float dt);
@@ -35,8 +38,14 @@ public:
     void Run();
 
     void SetGameOver();
+    void SetGameWin();
 
     void SetGameOverImage(const std::string& imagePath);
     void SetGameOverOverlayOpacity(int opacity);
     void SetGameOverTextColor(const sf::Color& color);
+
+    void SetWinImage(const std::string& imagePath);
+    void SetWinOverlayOpacity(int opacity);
+    void SetWinTextColor(const sf::Color& color);
+    void SetWinInfoColor(const sf::Color& color);
 };
