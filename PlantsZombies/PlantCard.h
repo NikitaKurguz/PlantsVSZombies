@@ -17,13 +17,11 @@ class PlantCard {
 private:
     sf::RectangleShape background;
     sf::Sprite icon;
-    sf::Text cooldown_text;
 
     PlantType type;
     int cost;
     float cooldown_time;
     float current_cooldown = 0;
-    bool is_available = true;
 
     sf::Vector2f position;
     bool is_hovered = false;
@@ -48,6 +46,6 @@ public:
     void UpdateCooldown(float dt);
 
     PlantType GetType() const { return type; }
-    bool IsAvailable() const { return is_available && current_cooldown <= 0; }
+    bool IsAvailable() const { return current_cooldown <= 0; }
     int GetCost() const { return cost; }
 };

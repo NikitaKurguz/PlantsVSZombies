@@ -24,10 +24,7 @@ void PlantCard::SetPosition(float x, float y)
 {
     position = { x, y };
     background.setPosition(x, y);
-
-    sf::FloatRect bgBounds = background.getLocalBounds();
-    sf::FloatRect iconBounds = icon.getLocalBounds();
-    icon.setPosition(x + bgBounds.width / 2, y + 40);
+    icon.setPosition(x + 40, y + 40);
 
 }
 
@@ -53,19 +50,14 @@ void PlantCard::Draw(sf::RenderWindow& window)
 {
     window.draw(background);
     window.draw(icon);
-
-    if (current_cooldown > 0)
-    {
-        cooldown_text.setString(std::to_string((int)current_cooldown + 1));
-        window.draw(cooldown_text);
-    }
 }
 
 bool PlantCard::Contains(const sf::Vector2i& mousePos) const
 {
-    sf::Vector2f mouseF(static_cast<float>(mousePos.x),
-        static_cast<float>(mousePos.y));
-    return background.getGlobalBounds().contains(mouseF);
+    return background.getGlobalBounds().contains(
+        float(mousePos.x),
+        float(mousePos.y)
+    );
 }
 
 void PlantCard::OnHover(bool hover)
@@ -84,7 +76,6 @@ void PlantCard::OnClick(SunManager* sunManager)
 void PlantCard::StartCooldown()
 {
     current_cooldown = cooldown_time;
-    is_available = false;
 }
 
 void PlantCard::UpdateCooldown(float dt)
@@ -95,7 +86,6 @@ void PlantCard::UpdateCooldown(float dt)
         if (current_cooldown <= 0)
         {
             current_cooldown = 0;
-            is_available = true;
         }
     }
 }

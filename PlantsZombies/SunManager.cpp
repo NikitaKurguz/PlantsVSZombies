@@ -21,7 +21,6 @@ void SunManager::Update(float dt)
     {
         SpawnNaturalSun();
         natural_spawn_timer = 0;
-        natural_spawn_delay = 25 + (rand() % 5);
     }
 }
 
