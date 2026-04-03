@@ -1,4 +1,4 @@
-#include "Pea.h"
+#include "PeaProjectile.h"
 #include "Manager.h"
 #include "Plant.h"
 

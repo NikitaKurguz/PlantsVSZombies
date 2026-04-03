@@ -34,17 +34,15 @@ public:
 
     CollisionObject GetType() const override { return CollisionObject::Plant; }
     bool IsCollision(Object* other) const override;
-    virtual void IsDeath();
+
     virtual void TakeDmg(float dmg);
     virtual void SendMessage(Message* m);
     virtual void Update(float t) override;
 
 
     virtual void CreateProjectile(Object* target) = 0;
-    virtual void Attack(float t);
     virtual Object* FindTargetInRange() = 0;
 
     Object* GetTarget();
-    void StartAttack(Object* target);
     void StopAttack();
 };

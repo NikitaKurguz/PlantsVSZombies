@@ -54,7 +54,7 @@
     <ClCompile Include="Projectile.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Pea.cpp">
+    <ClCompile Include="PeaProjectile.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Collector.cpp">

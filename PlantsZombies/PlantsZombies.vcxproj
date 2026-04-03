@@ -139,7 +139,7 @@
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="Object.cpp" />
-    <ClCompile Include="Pea.cpp" />
+    <ClCompile Include="PeaProjectile.cpp" />
     <ClCompile Include="Peashooter.cpp" />
     <ClCompile Include="Plant.cpp" />
     <ClCompile Include="PlantCard.cpp" />

@@ -30,22 +30,15 @@ bool Plant::IsCollision(Object* other) const
     return false;
 }
 
-void Plant::IsDeath()
-{
-    if (hp <= 0 && isAlive) {
-        isAlive = false;
-        if (field) field->ClearCell(row, col);
-        Manager* manager = Manager::GetExemplar();
-        manager->SendDeathMsg(this);
-    }
-}
-
 void Plant::TakeDmg(float dmg)
 {
     if (hp <= 0) return;
     hp -= dmg;
-    sprite.setColor(sf::Color(255, 150, 150, 255));
-    IsDeath();
+    if (hp <= 0 && isAlive) { 
+        isAlive = false;
+        if (field) field->ClearCell(row, col);
+        Manager::GetExemplar()->SendDeathMsg(this);
+    }
 }
 
 void Plant::SendMessage(Message* m)
@@ -55,44 +48,15 @@ void Plant::SendMessage(Message* m)
         if (m->deal_damage.target == this)
             TakeDmg(m->deal_damage.damage_amount);
     }
-    if (m->type == MessageType::Collision)
-    {
-        if (m->collision.obj1 == this || m->collision.obj2 == this)
-        {
-            Object* other = (m->collision.obj1 == this) ? m->collision.obj2 : m->collision.obj1;
-            if (other->GetType() == CollisionObject::Zombie)
-            {
-
-            }
-        }
-    }
     if (m->type == MessageType::Death)
     {
         if (m->death.death_object->GetID() == targetID)
             StopAttack();
     }
-
-
 }
 void Plant::Update(float t)
 {
-    if (sprite.getColor() != sf::Color::White)
-    {
-        color_timer += t;
-        if (color_timer >= 0.1)
-        {
-            sprite.setColor(sf::Color::White);
-            color_timer = 0;
-        }
-    }
-
     if (is_attack_type)
-        Attack(t);
-}
-
-
-void Plant::Attack(float t)
-{
     attack_timer += t;
 
     Object* target = FindTargetInRange();
@@ -114,15 +78,6 @@ Object* Plant::GetTarget()
 {
     if (targetID < 0) return nullptr;
     return Manager::GetExemplar()->FindObjectByID(targetID);
-}
-
-void Plant::StartAttack(Object* target)
-{
-    if (!target || !target->isAlive) return;
-
-    targetID = target->GetID();
-    isAttacking = true;
-    attack_timer = 0;
 }
 
 void Plant::StopAttack()

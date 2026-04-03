@@ -60,7 +60,7 @@ void SunManager::SpawnNaturalSun()
 
     int row = rand() % field->get_rows();
     float x = field->get_field_origin().x +
-        (rand() % static_cast<int>(field->get_field_size().x));
+        (rand() % int(field->get_field_size().x));
 
     sf::Vector2f pos(x, field->get_field_origin().y - 50);
 
