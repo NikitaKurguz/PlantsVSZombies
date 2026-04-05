@@ -1,7 +1,7 @@
 #include "PlantCard.h"
 
 PlantCard::PlantCard(PlantType type, int cost, float cooldown,
-    const std::string& icon_path, const sf::Font& font)
+    const std::string& icon_path)
     : type(type), cost(cost), cooldown_time(cooldown)
 {
     background.setSize(sf::Vector2f(80, 80));

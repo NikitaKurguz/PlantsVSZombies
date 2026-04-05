@@ -32,7 +32,7 @@ private:
 
 public:
     PlantCard(PlantType type, int cost, float cooldown,
-        const std::string& icon_path, const sf::Font& font);
+        const std::string& icon_path);
 
     void Update(float dt, SunManager* sunManager);
     void Draw(sf::RenderWindow& window);

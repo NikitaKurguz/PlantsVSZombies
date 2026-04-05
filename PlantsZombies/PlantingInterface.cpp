@@ -12,13 +12,6 @@ PlantingInterface::PlantingInterface(GameField* field, SunManager* sunManager, L
 {
     interface_position = { 10, 100 }; 
 
-    font.loadFromFile("fonts/arial.ttf");
-
-    highlight_cell.setSize(field->get_cell_size());
-    highlight_cell.setFillColor(sf::Color(255, 255, 0, 100));
-    highlight_cell.setOutlineThickness(2);
-    highlight_cell.setOutlineColor(sf::Color::Yellow);
-
     Initialize();
 }
 
@@ -26,22 +19,22 @@ void PlantingInterface::Initialize()
 {
     cards.push_back(std::make_unique<PlantCard>(
         PlantType::Peashooter, 100, 30,
-        "textures/plants/Peashoter_icon.png", font));
+        "textures/plants/Peashoter_icon.png"));
     cards.push_back(std::make_unique<PlantCard>(
         PlantType::Sunflower, 50, 30,
-        "textures/plants/Sunflower_icon.png", font));
+        "textures/plants/Sunflower_icon.png"));
     cards.push_back(std::make_unique<PlantCard>(
         PlantType::Wallnut, 50, 30, 
-        "textures/plants/Wallnut_icon.jpg", font));
+        "textures/plants/Wallnut_icon.jpg"));
     cards.push_back(std::make_unique<PlantCard>(
         PlantType::PotatoMine, 25, 50,  
-        "textures/plants/PotatoMine_icon.jpg", font));
+        "textures/plants/PotatoMine_icon.jpg"));
     cards.push_back(std::make_unique<PlantCard>(
         PlantType::Cabbage, 100, 30, 
-        "textures/plants/Cabbage_icon.jpg", font));
+        "textures/plants/Cabbage_icon.jpg"));
     cards.push_back(std::make_unique<PlantCard>(
         PlantType::CherryBomb, 150, 30,
-        "textures/plants/CherryBomb_icon.jpg", font));
+        "textures/plants/CherryBomb_icon.jpg"));
 
     float x = interface_position.x;
     float y = interface_position.y;
@@ -55,34 +48,7 @@ void PlantingInterface::Initialize()
 void PlantingInterface::Update(float dt, const sf::RenderWindow& window)
 {
     for (auto& card : cards)
-    {
         card->Update(dt, sunManager);
-    }
-
-    if (is_planting_mode)
-    {
-        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-        sf::Vector2f worldPos = window.mapPixelToCoords(mousePos);
-
-        if (worldPos.x >= field->get_field_origin().x &&
-            worldPos.x <= field->get_field_origin().x + field->get_field_size().x &&
-            worldPos.y >= field->get_field_origin().y &&
-            worldPos.y <= field->get_field_origin().y + field->get_field_size().y)
-        {
-            hover_col = static_cast<int>((worldPos.x - field->get_field_origin().x) / field->get_cell_size().x);
-            hover_row = static_cast<int>((worldPos.y - field->get_field_origin().y) / field->get_cell_size().y);
-
-            highlight_cell.setPosition(
-                field->get_field_origin().x + hover_col * field->get_cell_size().x,
-                field->get_field_origin().y + hover_row * field->get_cell_size().y
-            );
-        }
-        else
-        {
-            hover_row = -1;
-            hover_col = -1;
-        }
-    }
 }
 
 void PlantingInterface::Draw(sf::RenderWindow& window)
@@ -108,21 +74,6 @@ void PlantingInterface::Draw(sf::RenderWindow& window)
     for (auto& card : cards)
     {
         card->Draw(window);
-    }
-
-    if (is_planting_mode && hover_row >= 0 && hover_col >= 0)
-    {
-        if (field->IsCellFree(hover_row, hover_col))
-        {
-            highlight_cell.setFillColor(sf::Color(0, 255, 0, 100));
-            highlight_cell.setOutlineColor(sf::Color::Green);
-        }
-        else
-        {
-            highlight_cell.setFillColor(sf::Color(255, 0, 0, 100));
-            highlight_cell.setOutlineColor(sf::Color::Red);
-        }
-        window.draw(highlight_cell);
     }
 }
 
@@ -179,8 +130,6 @@ void PlantingInterface::EnterPlantingMode(PlantType type)
 void PlantingInterface::ExitPlantingMode()
 {
     is_planting_mode = false;
-    hover_row = -1;
-    hover_col = -1;
 }
 
 bool PlantingInterface::TryPlacePlant(int row, int col)
