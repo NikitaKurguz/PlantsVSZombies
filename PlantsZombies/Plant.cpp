@@ -82,7 +82,6 @@ Object* Plant::GetTarget()
 
 void Plant::StopAttack()
 {
-    isAttacking = false;
     targetID = -1;
     attack_timer = 0;
 }

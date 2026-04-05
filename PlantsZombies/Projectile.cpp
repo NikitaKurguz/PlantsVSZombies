@@ -1,6 +1,5 @@
 #include "Projectile.h"
 #include "Manager.h"
-#include <cmath>
 
 Projectile::Projectile(sf::Vector2f position,
     const std::string& texture_file,
@@ -68,13 +67,10 @@ bool Projectile::IsCollision(Object* other) const
 void Projectile::SendMessage(Message* m)
 {
     if (m->type != MessageType::Collision) return;
-
-    if (m->collision.obj1 != this && m->collision.obj2 != this)
-        return;
+    if (m->collision.obj1 != this && m->collision.obj2 != this) return;
 
     Object* other = (m->collision.obj1 == this)
-        ? m->collision.obj2
-        : m->collision.obj1;
+        ? m->collision.obj2 : m->collision.obj1;
 
     OnHit(other);
 }

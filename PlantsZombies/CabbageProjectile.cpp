@@ -36,9 +36,6 @@ void CabbageProjectile::Update(float dt)
 
 void CabbageProjectile::OnHit(Object* other)
 {
-    if (other->GetType() != CollisionObject::Zombie)
-        return;
-
     Manager::GetExemplar()->SendAttackMsg(this, other, damage);
     Manager::GetExemplar()->SendDeathMsg(this);
 

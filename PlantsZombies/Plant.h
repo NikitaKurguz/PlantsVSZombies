@@ -15,7 +15,6 @@ protected:
     bool is_attack_type;
 
     int targetID = -1;
-    bool isAttacking = false;
     bool projectile_active = false;
     float color_timer = 0;
 

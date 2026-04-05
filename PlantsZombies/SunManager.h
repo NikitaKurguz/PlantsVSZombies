@@ -7,7 +7,7 @@ class SunManager
 private:
     int sun_count = 150;
     float natural_spawn_timer = 0.0f;
-    float natural_spawn_delay = 10.0f;
+    float natural_spawn_delay = 20.0f;
     GameField* field;
 
     sf::Font font;
