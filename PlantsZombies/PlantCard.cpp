@@ -32,11 +32,7 @@ void PlantCard::Update(float dt, SunManager* sunManager)
 {
     UpdateCooldown(dt);
 
-    if (!IsAvailable() || (sunManager && sunManager->GetSunCount() < cost))
-    {
-        background.setFillColor(unavailable_color);
-    }
-    else if (is_hovered)
+    if (is_hovered)
     {
         background.setFillColor(hover_color);
     }

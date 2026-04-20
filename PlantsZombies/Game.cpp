@@ -35,9 +35,6 @@ void Game::InitializeGame()
     gameOverScreen->SetGameOverImage("textures/other/Human.png");
     winScreen->SetWinImage("textures/other/Crow.png");
 
-    Collector* collector = new Collector(&field);
-    manager->SendCreateMsg(collector);
-
     gameOver = false;
     gameWin = false;
     manager->ResetGameFlags();
